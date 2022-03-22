@@ -18,14 +18,13 @@
       padding:5px;
       margin-bottom:5px;
       border: 0px solid #bcbcbc;
-      background-color:lightblue;
    }
    #sidebar-left {
       width:15%;
-      height:700px;
+      height: 330px;
       padding: 5px;
       margin-right: 5px;
-      margin-bottom: 5px;
+      margin-bottom: 300px;
       float: left;
       background-color: silver;
       border: 0px solid #bcbcbc;
@@ -42,7 +41,7 @@
       clear:both;
       padding: 5px;
       border: 0px solid #bcbcbc;
-      background-color:lightblue;
+      background-color: silver;
    }
 </style>
 </head>

@@ -6,7 +6,7 @@ header {
 }
 
 .header {
-   width: 80%;
+   width: 90%;
    display: flex;
    justify-content: space-around;
    align-items: center;
@@ -38,4 +38,15 @@ header {
     display: flex;
     justify-content: flex-end;
     align-items: center;
+}
+
+.header .header_column:first-child {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.header .header_column:last-child ul a {
+   text-decoration: none;
+   color: rgb(138, 138, 138);
 }

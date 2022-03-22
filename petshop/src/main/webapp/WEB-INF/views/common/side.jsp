@@ -14,11 +14,12 @@
 <style>
    .no-underline {
       text-decoration: none;
+      color: black;
    }
 </style>
 </head>
 <body>
-   <h1>카테고리</h1>
+   <h1>카테고리</h1><br>
    <h1>
       <a href="/pro12/member/listMembers.do" class="no-underline">음식</a><br><br>
       <a href="/pro12/board/listArticles.do" class="no-underline">옷</a><br><br>

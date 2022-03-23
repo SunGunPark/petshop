@@ -4,6 +4,6 @@
 	
 <configuration>
 	<typeAliases>
-		<typeAlias type="com.spring.petshop.member.vo.MemberVO" alias="memberVO" />
+		<typeAlias type="com.spring.petshop.user.vo.UserVO" alias="userVO" />
 	</typeAliases>
 </configuration>

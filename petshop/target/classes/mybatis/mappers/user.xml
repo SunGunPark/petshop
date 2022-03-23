@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+      PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.user">
+	<resultMap id="uResult" type="userVO">
+		<result property="user_id" column="user_id" />
+        <result property="u_pwd" column="u_pwd" />
+        <result property="u_name" column="u_name" />
+        <result property="u_phone" column="u_phone" />
+        <result property="u_address" column="u_address" />
+	</resultMap> 
+	<!-- 
+	<resultMap id="memResult" type="java.util.HashMap">
+      <result property="id" column="id" />
+      <result property="pwd" column="pwd" />
+      <result property="name" column="name" />
+      <result property="email" column="email" />
+      <result property="joinDate" column="joinDate" />
+   </resultMap> -->
+
+
+	<select id="selectAllUserList" resultMap="uResult">
+      <![CDATA[
+         select * from p_user order by user_id asc	 	
+      ]]>
+	</select>
+
+	<select id="selectName" resultType="String">
+    <![CDATA[
+	select name from p_user
+	where id = 'hong'			
+    ]]>
+	</select>
+	
+	<select id="selectPwd" resultType="int" >
+	  <![CDATA[ 
+	    select pwd from p_user 
+	    where id = 'hong'
+	 ]]>
+	 </select> 
+	 
+	<select id="selectUserById" resultType="userVO"  parameterType="String" >
+      <![CDATA[
+         select * from p_user
+         where
+         u_id=#{u_id}			
+      ]]>
+	 </select>	
+	
+	<select id="selectUserByPwd" resultMap="uResult"  parameterType="int" >
+      <![CDATA[
+         select * from p_user
+         where
+         u_pwd = #{u_pwd}			
+      ]]>
+    </select>
+    
+    <select id="loginById" resultType="userVO" parameterType="userVO">
+    	<![CDATA[
+    		select * from p_user where u_id=#{u_id} and u_pwd=#{u_pwd}
+    	]]>
+    </select>
+    
+     <insert id="insertUser"  parameterType="userVO">
+		<![CDATA[
+		 insert into p_user(u_id,u_pwd, u_name, u_phone, u_address)
+		 values(#{u_id}, #{u_pwd}, #{u_name}, #{u_phone}, #{u_address})
+		]]>      
+	</insert>
+	
+	<insert id="insertUser2"  parameterType="java.util.HashMap">
+		<![CDATA[
+			 insert into p_user(u_id,u_pwd, u_name, u_phone, u_address)
+			 values(#{u_id}, #{u_pwd}, #{u_name}, #{u_phone, u_address})
+		]]>      
+   </insert>
+   
+   <update id="updateUser"  parameterType="userVO">
+     <![CDATA[
+	     update p_user
+	     set u_pwd=#{u_pwd}, u_name=#{u_name}, u_phone=#{u_phone}, u_address=#{u_address}
+	     where
+	     u_id=#{u_id}
+      ]]>      
+   </update> 
+     
+   <delete id="deleteUser"  parameterType="String">
+	<![CDATA[
+	   delete from p_user
+	   where
+	   u_id=#{u_id}
+	]]>      
+  </delete>
+	
+	
+	<!-- 동적 SQL문 -->
+  <select id="searchUser" parameterType="userVO" resultMap="uResult">
+      <![CDATA[
+          select * from p_user
+      ]]>
+      <where>
+         <if test=" u_name != ''  and  u_name != null">
+            u_name=#{u_name}
+         </if>
+         <if test="u_address != ''  and u_address != null ">
+           and u_address = #{u_address}
+         </if>
+      </where>
+      order by user_id
+  </select>
+  
+ <!--  
+   <sql id="a">
+    <![CDATA[
+      select * from t_member
+     ]]> 
+   </sql>  -->  
+  
+<!--    
+  <select id="searchMember" parameterType="memberVO" resultMap="memResult">
+	     <include refid="a" /> 
+	   <![CDATA[
+         select * from t_member 
+      ]]>
+	  
+       <where>
+		  <choose>
+		      <when test="name != '' and name != null and  email != '' and email != null">
+			     name=#{name} and email=#{email}
+		      </when>
+		      <when test="name != '' and name != null">
+			     name = #{name}
+		      </when>
+		      <when test="email !='' and email != null">
+			    email = #{email}
+		      </when>
+	      </choose>
+       </where>
+       order by joinDate desc
+   </select> -->
+   
+   <select id="foreachSelect" resultMap="uResult" parameterType="java.util.Map">
+      <!-- <include refid="a" /> -->
+      <![CDATA[
+        select * from p_user
+          
+      ]]>
+      
+      where u_name in
+      <foreach item="item" collection="list" open="(" separator="," close=")" >
+         #{item}
+      </foreach>
+      order by user_id
+   </select>
+   
+   <insert id="foreachInsert"  parameterType="java.util.Map">
+      <foreach item="item"  collection="list"   open="INSERT ALL" separator=" " close="SELECT * FROM DUAL" >
+          INTO  p_user(u_id, u_pwd, u_name, u_phone, u_address)
+          VALUES  (#{item.u_id},
+                    #{item.u_pwd},
+                    #{item.u_name},
+                    #{item.u_phone},
+                    #{item.u_address}
+                    )
+      </foreach>
+   </insert>
+   
+   <!--  like 검색 -->
+   <select id="selectLike" resultMap="uResult"  parameterType="String" >
+      <![CDATA[
+         select * from p_user
+         where
+         name like '%' || #{u_name} || '%'		
+      ]]>
+    </select>
+    
+    <update id="modUser" parameterType="userVO">
+		<![CDATA[
+			update p_user set u_pwd=#{u_pwd}, u_name=#{u_name}, u_phone=#{u_phone}, u_address=#{u_address}
+				where u_id=#{u_id}
+		]]>
+	</update>
+	
+	<select id="selectId" parameterType="String" resultType="userVO">
+		select * from p_user where u_id=#{u_id}
+	</select>
+</mapper>

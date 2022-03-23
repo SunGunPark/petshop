@@ -29,17 +29,17 @@
            <ul class="login_menu">
               <c:choose>
                   <c:when test="${isLogOn=='true' }">
-                     <a href="/pro12/member/modMember.do?id=${member.id }"><li>${member.id }</li></a>
-                     <a href="/pro12/member/logout.do"><li>로그아웃&nbsp;&nbsp;</li></a>
+                     <li><a href="/petshop/user/modMember.do?id=${user.user_id }">${user.user_id }</a></li>
+                     <li><a href="/petshop/user/logout.do">로그아웃&nbsp;&nbsp;</a></li>
                   </c:when>
                   <c:otherwise>
-                     <a href="/pro12/member/loginForm.do" class="no-underline"><li>로그인&nbsp;&nbsp;</li></a>
+                     <li><a href="/petshop/user/login.do" class="no-underline">로그인&nbsp;&nbsp;</a></li>
                   </c:otherwise>
                </c:choose>
-               <li>회원가입&nbsp;&nbsp;</li>
+               <li><a href="/petshop/user/register.do">회원가입&nbsp;&nbsp;</a></li>
                <li>장바구니&nbsp;&nbsp;</li>
-               <li>게시판&nbsp;&nbsp;</li>
-               <li>마이페이지</li>
+               <li><a href="/petshop/board/board.do">게시판&nbsp;&nbsp;</a></li>
+               <li><a href="/petshop/user/myPage.do">마이페이지</a></li>
            </ul>
        </div>
    </div>

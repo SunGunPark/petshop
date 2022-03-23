@@ -16,16 +16,24 @@
  		<put-attribute name="body" value="/WEB-INF/views/main.jsp" />
  	</definition>
  	
- 	<definition name="/member/listMembers" extends="baseLayout">
+ 	<definition name="/user/listMembers" extends="baseLayout">
  		<put-attribute name="title" value="회원목록창" />
- 		<put-attribute name="body" value="/WEB-INF/views/member/listMembers.jsp" />
+ 		<put-attribute name="body" value="/WEB-INF/views/user/listMembers.jsp" />
  	</definition>
- 	<definition name="/member/loginForm" extends="baseLayout">
+ 	<definition name="/user/login" extends="baseLayout">
  		<put-attribute name="title" value="로그인창" />
- 		<put-attribute name="body" value="/WEB-INF/views/member/loginForm.jsp" />
+ 		<put-attribute name="body" value="/WEB-INF/views/user/loginForm.jsp" />
  	</definition>
- 	 	<definition name="/member/modMember" extends="baseLayout">
- 		<put-attribute name="title" value="회원정보수정창" />
- 		<put-attribute name="body" value="/WEB-INF/views/member/modMember.jsp" />
+ 	 	<definition name="/board/board" extends="baseLayout">
+ 		<put-attribute name="title" value="게시판" />
+ 		<put-attribute name="body" value="/WEB-INF/views/board/boardForm.jsp" />
+ 	</definition>
+ 	<definition name="/user/myPage" extends="baseLayout">
+ 		<put-attribute name="title" value="마이페이지" />
+ 		<put-attribute name="body"  value="/WEB-INF/views/user/myPageForm.jsp" />
+ 	</definition>
+ 	<definition name="/user/register">
+ 	 	<put-attribute name="title" value="회원가입" />
+ 		<put-attribute name="body"  value="/WEB-INF/views/user/registerForm.jsp" />
  	</definition>
  </tiles-definitions>

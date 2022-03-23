@@ -19,7 +19,7 @@
 </style>
 </head>
 <body>
-	<form method="post"   action="${contextPath}/user/addUser.do">
+	<form method="post"   action="${contextPath}/user/register.do">
 	<h1  class="text_center">회원 가입창</h1>
 	<table  align="center">
 	   <tr>

@@ -176,7 +176,7 @@ public class UserControllerImpl implements UserController {
 		mav.setViewName("/user/myPage");
 		System.out.println(usersList);
 		System.out.println(viewName);
-		HttpSession session = request.getSession();
+		//HttpSession session = request.getSession();
 		String my_id = "admin";
 		if(my_id=="admin") {
 			System.out.println("admin 실행");

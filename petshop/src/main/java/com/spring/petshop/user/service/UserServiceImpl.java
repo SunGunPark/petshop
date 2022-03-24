@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.spring.petshop.user.dao.UserDAO;
 import com.spring.petshop.user.vo.UserVO;
 
-//@Service("UserService")
+@Service("UserService")
 @Transactional(propagation = Propagation.REQUIRED)
 public class UserServiceImpl implements UserService {
 	@Autowired

@@ -26,25 +26,4 @@ public class HomeController {
 	public String home(Locale locale, Model model) {
 		return "main";
 	}
-	
-	@RequestMapping(value = "/user/myPage.do", method = RequestMethod.GET)
-	public String myPage(Locale locale, Model model) {
-		return "/user/myPage";
-	}
-	
-	@RequestMapping(value = "/board/board.do", method = RequestMethod.GET)
-	public String board(Locale locale, Model model) {
-		return "/board/baord";
-	}
-	
-	@RequestMapping(value = "/user/login.do", method = RequestMethod.GET)
-	public String login(Locale locale, Model model) {
-		return "/user/login";
-	}
-	
-	@RequestMapping(value = "/user/register.do", method = RequestMethod.GET)
-	public String register(Locale locale, Model model) {
-		return "/user/register";
-	}
-	
 }

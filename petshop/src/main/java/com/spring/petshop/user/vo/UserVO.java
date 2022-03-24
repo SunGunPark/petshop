@@ -2,10 +2,10 @@ package com.spring.petshop.user.vo;
 
 import org.springframework.stereotype.Component;
 
-//@Component("userVO")
+@Component("userVO")
 public class UserVO {
 	private String user_id;
-	private String u_pwd;
+	private int u_pwd;
 	private String u_name;
 	private String u_phone;
 	private String u_address;
@@ -23,11 +23,11 @@ public class UserVO {
 	}
 	
 	
-	public String getU_pwd() {
+	public int getU_pwd() {
 		return u_pwd;
 	}
 
-	public void setU_pwd(String u_pwd) {
+	public void setU_pwd(int u_pwd) {
 		this.u_pwd = u_pwd;
 	}
 

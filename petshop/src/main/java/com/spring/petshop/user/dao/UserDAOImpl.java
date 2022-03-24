@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.spring.petshop.user.vo.UserVO;
 
-//@Repository("UserDAO")
+@Repository("UserDAO")
 public class UserDAOImpl implements UserDAO {
 	@Autowired
 	private SqlSession sqlSession;

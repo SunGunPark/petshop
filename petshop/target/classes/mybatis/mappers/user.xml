@@ -23,21 +23,21 @@
 
 	<select id="selectAllUserList" resultMap="uResult">
       <![CDATA[
-         select * from p_user order by user_id asc	 	
+         select * from p_user	 	
       ]]>
 	</select>
 
 	<select id="selectName" resultType="String">
     <![CDATA[
 	select name from p_user
-	where id = 'hong'			
+	where user_id = 'hong'			
     ]]>
 	</select>
 	
 	<select id="selectPwd" resultType="int" >
 	  <![CDATA[ 
 	    select pwd from p_user 
-	    where id = 'hong'
+	    where user_id = 'hong'
 	 ]]>
 	 </select> 
 	 
@@ -45,7 +45,7 @@
       <![CDATA[
          select * from p_user
          where
-         u_id=#{u_id}			
+         user_id=#{user_id}			
       ]]>
 	 </select>	
 	
@@ -59,21 +59,21 @@
     
     <select id="loginById" resultType="userVO" parameterType="userVO">
     	<![CDATA[
-    		select * from p_user where u_id=#{u_id} and u_pwd=#{u_pwd}
+    		select * from p_user where user_id=#{user_id} and u_pwd=#{u_pwd}
     	]]>
     </select>
     
      <insert id="insertUser"  parameterType="userVO">
 		<![CDATA[
-		 insert into p_user(u_id,u_pwd, u_name, u_phone, u_address)
-		 values(#{u_id}, #{u_pwd}, #{u_name}, #{u_phone}, #{u_address})
+		 insert into p_user(user_id,u_pwd, u_name, u_phone, u_address)
+		 values(#{user_id}, #{u_pwd}, #{u_name}, #{u_phone}, #{u_address})
 		]]>      
 	</insert>
 	
 	<insert id="insertUser2"  parameterType="java.util.HashMap">
 		<![CDATA[
-			 insert into p_user(u_id,u_pwd, u_name, u_phone, u_address)
-			 values(#{u_id}, #{u_pwd}, #{u_name}, #{u_phone, u_address})
+			 insert into p_user(user_id,u_pwd, u_name, u_phone, u_address)
+			 values(#{user_id}, #{u_pwd}, #{u_name}, #{u_phone, u_address})
 		]]>      
    </insert>
    
@@ -82,7 +82,7 @@
 	     update p_user
 	     set u_pwd=#{u_pwd}, u_name=#{u_name}, u_phone=#{u_phone}, u_address=#{u_address}
 	     where
-	     u_id=#{u_id}
+	     user_id=#{user_id}
       ]]>      
    </update> 
      
@@ -90,7 +90,7 @@
 	<![CDATA[
 	   delete from p_user
 	   where
-	   u_id=#{u_id}
+	   user_id=#{user_id}
 	]]>      
   </delete>
 	
@@ -157,8 +157,8 @@
    
    <insert id="foreachInsert"  parameterType="java.util.Map">
       <foreach item="item"  collection="list"   open="INSERT ALL" separator=" " close="SELECT * FROM DUAL" >
-          INTO  p_user(u_id, u_pwd, u_name, u_phone, u_address)
-          VALUES  (#{item.u_id},
+          INTO  p_user(user_id, u_pwd, u_name, u_phone, u_address)
+          VALUES  (#{item.user_id},
                     #{item.u_pwd},
                     #{item.u_name},
                     #{item.u_phone},
@@ -179,11 +179,11 @@
     <update id="modUser" parameterType="userVO">
 		<![CDATA[
 			update p_user set u_pwd=#{u_pwd}, u_name=#{u_name}, u_phone=#{u_phone}, u_address=#{u_address}
-				where u_id=#{u_id}
+				where user_id=#{user_id}
 		]]>
 	</update>
 	
 	<select id="selectId" parameterType="String" resultType="userVO">
-		select * from p_user where u_id=#{u_id}
+		select * from p_user where user_id=#{user_id}
 	</select>
 </mapper>

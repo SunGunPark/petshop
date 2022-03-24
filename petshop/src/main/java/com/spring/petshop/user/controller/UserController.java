@@ -12,6 +12,7 @@ import com.spring.petshop.user.vo.UserVO;
 
 public interface UserController {
 	public ModelAndView listUsers(HttpServletRequest request, HttpServletResponse response) throws Exception;
+	public ModelAndView myPage(@ModelAttribute("user")UserVO user, RedirectAttributes rAttr, HttpServletRequest request, HttpServletResponse response) throws Exception;
 	public ModelAndView addUser(@ModelAttribute("info") UserVO userVO,HttpServletRequest request, HttpServletResponse response) throws Exception;
 	public ModelAndView removeUser(@RequestParam("u_id") String id, HttpServletRequest request, HttpServletResponse response) throws Exception;
 	public ModelAndView login(@ModelAttribute("user") UserVO user, RedirectAttributes rAttr, HttpServletRequest request, HttpServletResponse response) throws Exception;

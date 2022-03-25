@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 @Component("userVO")
 public class UserVO {
 	private String user_id;
-	private int u_pwd;
+	private String u_pwd;
 	private String u_name;
 	private String u_phone;
 	private String u_address;
@@ -23,11 +23,11 @@ public class UserVO {
 	}
 	
 	
-	public int getU_pwd() {
+	public String getU_pwd() {
 		return u_pwd;
 	}
 
-	public void setU_pwd(int u_pwd) {
+	public void setU_pwd(String u_pwd) {
 		this.u_pwd = u_pwd;
 	}
 

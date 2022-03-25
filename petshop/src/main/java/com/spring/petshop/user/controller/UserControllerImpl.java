@@ -77,6 +77,7 @@ public class UserControllerImpl implements UserController {
 	public ModelAndView login(UserVO user, RedirectAttributes rAttr, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		ModelAndView mav = new ModelAndView();
+		mav.setViewName("/user/login");
 		userVO = userService.login(user);
 		if (userVO != null) {
 			HttpSession session = request.getSession();
@@ -84,10 +85,10 @@ public class UserControllerImpl implements UserController {
 			session.setAttribute("isLogOn", true);
 			System.out.println("로그인 성공");
 			mav.setViewName("redirect:/user/listUsers.do");
-		} else {
+		} else{
 			rAttr.addAttribute("result", "loginFailed");
 			System.out.println("로그인 실패");
-			mav.setViewName("redirect:/user/login.do");
+			//mav.setViewName("redirect:/user/login.do");
 		}
 		return mav;
 	}
@@ -170,6 +171,7 @@ public class UserControllerImpl implements UserController {
 		mav.setViewName("/user/myPage");
 		HttpSession session = request.getSession();
 		String my_id = "admin";
+		System.out.println(userVO.getUser_id());
 		if (my_id.equals("") || my_id == null) {
 			mav.setViewName("redirect:/user/login.do");
 		} else {

@@ -41,10 +41,10 @@
     ]]>
 	</select>
 	
-	<select id="selectPwd" resultType="int" >
+	<select id="selectPwd" resultType="String" >
 	  <![CDATA[ 
-	    select pwd from p_user 
-	    where user_id = 'hong'
+	    select u_pwd from p_user 
+	    where u_pwd = ''
 	 ]]>
 	 </select> 
 	 
@@ -56,7 +56,7 @@
       ]]>
 	 </select>	
 	
-	<select id="selectUserByPwd" resultMap="uResult"  parameterType="int" >
+	<select id="selectUserByPwd" resultMap="uResult"  parameterType="String" >
       <![CDATA[
          select * from p_user
          where
@@ -66,7 +66,7 @@
     
     <select id="loginById" resultType="userVO" parameterType="userVO">
     	<![CDATA[
-    		select * from p_user where user_id=#{user_id} and u_pwd=#{u_pwd}
+    		select * from p_user where user_id=#{user_id, jdbcType=VARCHAR} and u_pwd=#{u_pwd, jdbcType=VARCHAR}
     	]]>
     </select>
     

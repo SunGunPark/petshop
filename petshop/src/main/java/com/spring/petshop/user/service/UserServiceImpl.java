@@ -49,4 +49,11 @@ public class UserServiceImpl implements UserService {
 		return userDAO.selectId(id);
 	}
 
+	@Override
+	public List selectListId(String id) throws DataAccessException {
+		List usersList = null;
+		
+		return null;
+	}
+
 }

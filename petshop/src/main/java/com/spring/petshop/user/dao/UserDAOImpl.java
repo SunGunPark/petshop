@@ -49,4 +49,11 @@ public class UserDAOImpl implements UserDAO {
 		return (UserVO) sqlSession.selectOne("mapper.user.selectId", id);
 	}
 
+	@Override
+	public List selectListId(String id) throws DataAccessException {
+		List<UserVO> usersList = null;
+		usersList = sqlSession.selectList("mapper.user.selectListId", id);
+		return usersList;
+	}
+
 }

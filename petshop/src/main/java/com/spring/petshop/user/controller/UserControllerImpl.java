@@ -24,14 +24,14 @@ import com.spring.petshop.user.vo.UserVO;
 @EnableAspectJAutoProxy
 @Controller("UserController")
 public class UserControllerImpl implements UserController {
-	
+
 	@Autowired
 	private UserService userService;
 	@Autowired
 	private UserVO userVO;
-	
+
 	@Override
-	@RequestMapping(value="/user/listUsers.do" ,method = RequestMethod.GET)
+	@RequestMapping(value = "/user/listUsers.do", method = RequestMethod.GET)
 	public ModelAndView listUsers(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String viewName = getViewName(request);
 		List usersList = userService.listUsers();
@@ -39,11 +39,10 @@ public class UserControllerImpl implements UserController {
 		mav.addObject("usersList", usersList);
 		return mav;
 	}
-	
-	
-	//유저 로그인
+
+	// 유저 로그인
 	@Override
-	@RequestMapping(value="/user/register.do" ,method = RequestMethod.POST)
+	@RequestMapping(value = "/user/register.do", method = RequestMethod.POST)
 	public ModelAndView addUser(UserVO user, HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
 		request.setCharacterEncoding("utf-8");
@@ -54,7 +53,7 @@ public class UserControllerImpl implements UserController {
 	}
 
 	@Override
-	@RequestMapping(value="/user/removeUser.do" ,method = RequestMethod.GET)
+	@RequestMapping(value = "/user/removeUser.do", method = RequestMethod.GET)
 	public ModelAndView removeUser(String id, HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
 		request.setCharacterEncoding("utf-8");
@@ -62,11 +61,9 @@ public class UserControllerImpl implements UserController {
 		ModelAndView mav = new ModelAndView("redirect:/user/listUsers.do");
 		return mav;
 	}
-	
-	
-	@RequestMapping(value = "/user/*Form.do", method =  RequestMethod.GET)
-	public ModelAndView form(
-			@RequestParam(value="result", required = false) String result, 
+
+	@RequestMapping(value = "/user/*Form.do", method = RequestMethod.GET)
+	public ModelAndView form(@RequestParam(value = "result", required = false) String result,
 			HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String viewName = getViewName(request);
 		ModelAndView mav = new ModelAndView();
@@ -74,14 +71,14 @@ public class UserControllerImpl implements UserController {
 		mav.setViewName(viewName);
 		return mav;
 	}
-	
+
 	@Override
-	@RequestMapping(value="/user/login.do")
+	@RequestMapping(value = "/user/login.do")
 	public ModelAndView login(UserVO user, RedirectAttributes rAttr, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		ModelAndView mav = new ModelAndView();
 		userVO = userService.login(user);
-		if(userVO != null) {
+		if (userVO != null) {
 			HttpSession session = request.getSession();
 			session.setAttribute("user", userVO);
 			session.setAttribute("isLogOn", true);
@@ -94,7 +91,7 @@ public class UserControllerImpl implements UserController {
 		}
 		return mav;
 	}
-	
+
 	private String getViewName(HttpServletRequest request) throws Exception {
 		String contextPath = request.getContextPath();
 		String uri = (String) request.getAttribute("javax.servlet.include.request_uri");
@@ -121,84 +118,87 @@ public class UserControllerImpl implements UserController {
 			viewName = viewName.substring(0, viewName.lastIndexOf("."));
 		}
 		if (viewName.lastIndexOf("/") != -1) {
-			viewName = viewName.substring(viewName.lastIndexOf("/",1), viewName.length());
+			viewName = viewName.substring(viewName.lastIndexOf("/", 1), viewName.length());
 		}
 		return viewName;
 	}
 
 	@Override
-	@RequestMapping(value="/user/logout.do", method=RequestMethod.GET)
+	@RequestMapping(value = "/user/logout.do", method = RequestMethod.GET)
 	public ModelAndView logout(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		ModelAndView mav = new ModelAndView();
-		
+
 		HttpSession session = request.getSession();
 		session.invalidate();
-		
+
 		mav.setViewName("redirect:/user/login.do");
 		return mav;
 	}
 
 	@Override
-	@RequestMapping(value="/user/modUser.do", method= {RequestMethod.GET, RequestMethod.POST})
-	public ModelAndView modUser(
-			@ModelAttribute("user") UserVO user, HttpServletRequest request, HttpServletResponse response)
-			throws Exception {
+	@RequestMapping(value = "/user/modUser.do", method = { RequestMethod.GET, RequestMethod.POST })
+	public ModelAndView modUser(@ModelAttribute("user") UserVO user, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 		request.setCharacterEncoding("utf-8");
-		
+
 		String action = request.getParameter("action");
-		
+
 		ModelAndView mav = new ModelAndView();
-		if(action == null) {
+		if (action == null) {
 			String id = request.getParameter("id");
 			UserVO userVO = userService.selectId(id);
 			System.out.println("DB 전 : " + userVO.getU_name());
 			mav.addObject("userVO", userVO);
 			mav.setViewName(getViewName(request));
-		} else if(action.equals("mod")) {
-			System.out.println("DB 후 : "+ user.getU_name());
+		} else if (action.equals("mod")) {
+			System.out.println("DB 후 : " + user.getU_name());
 			userService.modUser(user);
-			
+
 			mav.setViewName("redirect:/user/listUsers.do");
 		}
 		return mav;
 	}
 
-	//마이페이지
+	// 마이페이지
 	@Override
-	@RequestMapping(value="/user/myPage.do")
+	@RequestMapping(value = "/user/myPage.do")
 	public ModelAndView myPage(UserVO user, RedirectAttributes rAttr, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		System.out.println("myPage 테스트");
 		ModelAndView mav = new ModelAndView();
 		String viewName = getViewName(request);
-		List usersList = userService.listUsers();
-		mav.addObject(usersList);
 		mav.setViewName("/user/myPage");
-		System.out.println(usersList);
-		System.out.println(viewName);
 		HttpSession session = request.getSession();
 		String my_id = "admin";
-		if(my_id=="admin") {
-			System.out.println("admin 실행");
-			//mav.setViewName("redirect:/user/adminPage.do");
+		if (my_id.equals("") || my_id == null) {
+			mav.setViewName("redirect:/user/login.do");
+		} else {
+			if (my_id.equals("admin")) {
+				System.out.println("admin 실행");
+				List usersList = userService.listUsers();
+				mav.addObject("usersList", usersList);
+				// mav.setViewName("redirect:/user/adminPage.do");
+			} else {
+//				List usersList = userService.selectListId(my_id);
+				UserVO user2 = userService.selectId(my_id);
+				System.out.println(user2);
+				mav.addObject("usersList", user);
+				System.out.println(my_id + "님의 마이페이지");
+				// mav.setViewName("redirect:/user/userPage.do");
+			}
 		}
-		else if(my_id != null) {
-			System.out.println(my_id + "님의 마이페이지");
-			//mav.setViewName("redirect:/user/userPage.do");
-		} 
-		
 		return mav;
 	}
-	
-	@RequestMapping(value="/user/adminPage.do")
+
+	@RequestMapping(value = "/user/adminPage.do")
 	public ModelAndView adminPage(UserVO user, RedirectAttributes rAttr, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("/user/adminPage");
 		return mav;
 	}
-	
-	@RequestMapping(value="/user/userPage.do")
+
+	@RequestMapping(value = "/user/userPage.do")
 	public ModelAndView userPage(UserVO user, RedirectAttributes rAttr, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		ModelAndView mav = new ModelAndView();

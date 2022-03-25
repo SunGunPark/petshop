@@ -13,4 +13,5 @@ public interface UserService {
 	public UserVO login(UserVO user);
 	public void modUser(UserVO dto);
 	public UserVO selectId(String id);
+	public List selectListId(String id) throws DataAccessException;
 }

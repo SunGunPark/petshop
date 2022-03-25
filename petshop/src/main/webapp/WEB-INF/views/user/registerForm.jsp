@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"
-    isELIgnored="false" %>
+    pageEncoding="UTF-8" isELIgnored="false" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>    
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="contextPath"  value="${pageContext.request.contextPath}"  />
@@ -9,39 +8,67 @@
 %> 
 <!DOCTYPE html>
 <html>
+<script>
+function check() {
+    var f = document.register; 
+    if (f.userid.value == "") {
+        alert("아이디를 입력해주십시오");
+        f.userid.focus();
+        return false;
+    }
+    if (f.pwd.value == "") {
+        alert("비밀번호를 입력해주십시오");
+        f.pwd.focus();
+        return false;
+    }
+    if (f.name.value == "") {
+        alert("이름을 입력해주십시오");
+        f.name.focus();
+        return false;
+    }
+    if (f.phone.value == "") {
+        alert("휴대전화를 입력해주십시오");
+        f.phone.focus();
+        return false;
+    }
+    if (f.address.value == "") {
+        alert("주소를 입력해주십시오");
+        f.address.focus();
+        return false;
+    }
+}   
+</script>
 <head>
 <meta charset="UTF-8">
+<link rel="stylesheet" href="${contextPath}/resources/css/register.css">
 <title>회원 가입창</title>
-<style>
-   .text_center{
-     text-align:center;
-   }
-</style>
 </head>
 <body>
-	<form method="post"   action="${contextPath}/user/register.do">
-	<h1  class="text_center">회원 가입창</h1>
-	<table  align="center">
-	   <tr>
-	      <td width="200"><p align="right">아이디</td>
-	      <td width="400"><input type="text" name="id"></td>
-	   </tr>
-	   <tr>
-	      <td width="200"><p align="right">비밀번호</td>
-	      <td width="400"><input type="password" name="pwd"></td>
-	    </tr>
-	    <tr>
-	       <td width="200"><p align="right">이름</td>
-	       <td width="400"><p><input type="text" name="name"></td>
-	    </tr>
-	    <tr>
-	       <td width="200"><p align="right">이메일</td>
-	       <td width="400"><p><input type="text" name="email"></td>
-	    </tr>
-	    <tr>
-	       <td width="200"><p>&nbsp;</p></td>
-	       <td width="400"><input type="submit" value="가입하기"><input type="reset" value="다시입력"></td>
-	    </tr>
-	</table>
-	</form>
+   <form name="register" method="post" onsubmit="return check()" action="${contextPath}/user/register.do">
+          <div class="register-page">
+            <div class="form">
+              <div class="form-group" id="divId">
+                <label for="inputId" class="control-label">아이디</label>
+                <div class=""><input type="text" class="control-label" name="user_id" data-rule-required="true" placeholder="아이디" maxlength="15" autocomplete="off" ></div>              
+              </div>
+              <div class="form-group" id="divPassword">
+                <label for="inputPassword" class="control-label">비밀번호</label>
+                <div class=""><input type="password" class="form-control"name="u_pwd" data-rule-required="true" placeholder="비밀번호" maxlength="15"></div>
+              </div>
+              <div class="form-group" id="divName">
+                <label for="inputName" class="control-label">이름</label>
+                <div class=""><input type="text" class="form-control onlyAlphabetAndNumber check" name="u_name" data-rule-required="true" placeholder="Name" maxlength="15" autocomplete="off"></div>
+              </div>
+              <div class="form-group" id="divPhonenumber">
+                <label for="inputPhonenumber" class="control-label">휴대전화</label>
+                <div class=""><input type="tell" class="form-control"  name="u_phone" data-rule-required="true" placeholder=" - 를 제외하고 숫자만 입력하세요" maxlength="11" autocomplete="off"></div>
+              </div>
+              <div class="form-group" id="divAddress">
+                <label for="inputAddress" class="control-label">주소</label>
+                <div class=""><input type="text" class="form-control onlyAlphabetAndNumber check" name="u_address" data-rule-required="true" placeholder="Address" maxlength="15" autocomplete="off"></div>
+              </div>
+              <button>가입하기</button>
+            </div>
+          </div>
+      </form>
 </body>

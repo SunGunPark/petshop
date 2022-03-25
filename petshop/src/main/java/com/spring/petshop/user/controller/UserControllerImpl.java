@@ -42,13 +42,13 @@ public class UserControllerImpl implements UserController {
 
 	// 유저 로그인
 	@Override
-	@RequestMapping(value = "/user/register.do", method = RequestMethod.POST)
+	@RequestMapping(value = "/user/register.do")
 	public ModelAndView addUser(UserVO user, HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
 		request.setCharacterEncoding("utf-8");
 		int result = 0;
 		result = userService.addUser(user);
-		ModelAndView mav = new ModelAndView("redirect:/user/listUsers.do");
+		ModelAndView mav = new ModelAndView("redirect:/");
 		return mav;
 	}
 
@@ -171,7 +171,6 @@ public class UserControllerImpl implements UserController {
 		mav.setViewName("/user/myPage");
 		HttpSession session = request.getSession();
 		String my_id = "admin";
-		System.out.println(userVO.getUser_id());
 		if (my_id.equals("") || my_id == null) {
 			mav.setViewName("redirect:/user/login.do");
 		} else {

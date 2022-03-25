@@ -84,7 +84,7 @@ public class UserControllerImpl implements UserController {
 			session.setAttribute("user", userVO);
 			session.setAttribute("isLogOn", true);
 			System.out.println("로그인 성공");
-			mav.setViewName("redirect:/user/listUsers.do");
+			mav.setViewName("redirect:/");
 		} else{
 			rAttr.addAttribute("result", "loginFailed");
 			System.out.println("로그인 실패");
@@ -132,7 +132,7 @@ public class UserControllerImpl implements UserController {
 		HttpSession session = request.getSession();
 		session.invalidate();
 
-		mav.setViewName("redirect:/user/login.do");
+		mav.setViewName("redirect:/");
 		return mav;
 	}
 

@@ -38,7 +38,7 @@
                </c:choose>
                <li><a href="/petshop/user/registerForm.do">회원가입&nbsp;&nbsp;</a></li>
                <li>장바구니&nbsp;&nbsp;</li>
-               <li><a href="/petshop/board/board.do">게시판&nbsp;&nbsp;</a></li>
+               <li><a href="/petshop/board/boardForm.do">게시판&nbsp;&nbsp;</a></li>
                <li><a href="/petshop/user/myPageForm.do">마이페이지</a></li>
            </ul>
        </div>

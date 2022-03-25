@@ -29,7 +29,7 @@
            <ul class="login_menu">
               <c:choose>
                   <c:when test="${isLogOn=='true' }">
-                     <li><a href="/petshop/user/modMember.do?id=${user.user_id }">${user.user_id }</a></li>
+                     <li><a href="/petshop/user/modMember.do?id=${user.user_id }">${user.user_id }님</a></li>
                      <li><a href="/petshop/user/logout.do">로그아웃&nbsp;&nbsp;</a></li>
                   </c:when>
                   <c:otherwise>

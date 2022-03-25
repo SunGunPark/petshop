@@ -60,7 +60,7 @@
 <body>
    <form action="${contextPath}/user/login.do" method="post">   
       <div class="main">
-            <img src="${contextPath }/resources/image/pjh.jpg"><br><br>
+            <img src="${contextPath }/resources/image/dog.jpg"><br><br>
             <input type="text" name="user_id" placeholder="아이디를 입력하세요" class="input" required><br>
             <input type="password" name="u_pwd" placeholder="비밀번호를 입력하세요" class="input" required><br><br>
             <input type="submit" value="로그인" class="input" id="login">

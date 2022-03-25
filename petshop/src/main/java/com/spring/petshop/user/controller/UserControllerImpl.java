@@ -206,4 +206,13 @@ public class UserControllerImpl implements UserController {
 		mav.setViewName("/user/userPage");
 		return mav;
 	}
+	
+	@RequestMapping(value = "/board/board.do")
+	@Override
+	public ModelAndView board(UserVO user, RedirectAttributes rAttr, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		ModelAndView mav = new ModelAndView();
+		return mav;
+	}
+	
 }

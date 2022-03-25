@@ -18,4 +18,5 @@ public interface UserController {
 	public ModelAndView login(@ModelAttribute("user") UserVO user, RedirectAttributes rAttr, HttpServletRequest request, HttpServletResponse response) throws Exception;
 	public ModelAndView logout(HttpServletRequest request,	HttpServletResponse response) throws Exception;
 	public ModelAndView modUser(@ModelAttribute("user") UserVO user,HttpServletRequest request, HttpServletResponse response) throws Exception;
+	public ModelAndView board(@ModelAttribute("board")UserVO user, RedirectAttributes rAttr, HttpServletRequest request, HttpServletResponse response) throws Exception;
 }

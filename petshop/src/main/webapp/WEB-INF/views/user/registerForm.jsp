@@ -3,6 +3,15 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>    
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="contextPath"  value="${pageContext.request.contextPath}"  />
+<c:choose>
+<c:when test="${result=='registerFailed' }">
+	<script>
+		window.onload = function(){
+			alert('중복된 아이디가 있습니다. 다시 회원가입 하세요.');
+		}
+	</script>
+</c:when>
+</c:choose>
 <%
    request.setCharacterEncoding("UTF-8");
 %> 

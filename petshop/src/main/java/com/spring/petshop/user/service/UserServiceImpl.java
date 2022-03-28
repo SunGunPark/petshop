@@ -52,8 +52,14 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public List selectListId(String id) throws DataAccessException {
 		List usersList = null;
-		
-		return null;
+		usersList = userDAO.selectListId(id);
+		return usersList;
+	}
+
+	@Override
+	public int idChk(UserVO userVO) throws DataAccessException {
+		int result = userDAO.idChk(userVO);
+		return result;
 	}
 
 }

@@ -1,5 +1,7 @@
 package com.spring.petshop.user.controller;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.spring.petshop.common.alert.ScriptAlertUtils;
 import com.spring.petshop.user.service.UserService;
 import com.spring.petshop.user.vo.UserVO;
 
@@ -43,22 +46,41 @@ public class UserControllerImpl implements UserController {
 	// 유저 로그인
 	@Override
 	@RequestMapping(value = "/user/register.do")
-	public ModelAndView addUser(UserVO user, HttpServletRequest request, HttpServletResponse response)
+	public ModelAndView addUser(UserVO user, RedirectAttributes rAttr,HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
 		request.setCharacterEncoding("utf-8");
-		int result = 0;
-		result = userService.addUser(user);
-		ModelAndView mav = new ModelAndView("redirect:/");
+		int result = userService.idChk(user);
+		ModelAndView mav = new ModelAndView();
+		if(result == 0) {
+			result = userService.addUser(user);
+			mav.setViewName("redirect:/");
+		}else if(result == 1) {
+			rAttr.addAttribute("result", "registerFailed");
+			mav.setViewName("redirect:/");
+		}
 		return mav;
 	}
-
+	
+	@RequestMapping(value="/idChk.do" , method = RequestMethod.POST)
+	public int idChk(UserVO user) throws Exception {
+		int result = userService.idChk(user);
+		return result;
+	}
+	
 	@Override
-	@RequestMapping(value = "/user/removeUser.do", method = RequestMethod.GET)
+	@RequestMapping(value = "/user/removeUser.do")
 	public ModelAndView removeUser(String id, HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
 		request.setCharacterEncoding("utf-8");
 		userService.removeUser(id);
-		ModelAndView mav = new ModelAndView("redirect:/user/listUsers.do");
+		HttpSession session = request.getSession();
+		UserVO userVO = (UserVO)session.getAttribute("user");
+		if(!userVO.getUser_id().equals("admin")) {
+			session.invalidate();
+		}
+		ScriptAlertUtils scriptAlertUtils = new ScriptAlertUtils();
+		scriptAlertUtils.alertAndMovePage(response, "삭제가 완료되었습니다.", "/petshop");
+		ModelAndView mav = new ModelAndView("redirect:/");
 		return mav;
 	}
 
@@ -154,7 +176,7 @@ public class UserControllerImpl implements UserController {
 		} else if (action.equals("mod")) {
 			System.out.println("DB 후 : " + user.getU_name());
 			userService.modUser(user);
-
+			
 			mav.setViewName("redirect:/user/listUsers.do");
 		}
 		return mav;
@@ -162,32 +184,32 @@ public class UserControllerImpl implements UserController {
 
 	// 마이페이지
 	@Override
-	@RequestMapping(value = "/user/myPage.do")
-	public ModelAndView myPage(UserVO user, RedirectAttributes rAttr, HttpServletRequest request,
+	@RequestMapping(value = "/user/myPageForm.do")
+	public ModelAndView myPageForm(UserVO user, RedirectAttributes rAttr,HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
-		System.out.println("myPage 테스트");
-		ModelAndView mav = new ModelAndView();
+		request.setCharacterEncoding("utf-8");
+		response.setContentType("text/html; charset=utf-8");
+		ScriptAlertUtils scriptAlertUtils = new ScriptAlertUtils();
 		String viewName = getViewName(request);
-		mav.setViewName("/user/myPage");
+		ModelAndView mav = new ModelAndView(viewName);
 		HttpSession session = request.getSession();
-		String my_id = "admin";
-		if (my_id.equals("") || my_id == null) {
-			mav.setViewName("redirect:/user/login.do");
-		} else {
-			if (my_id.equals("admin")) {
-				System.out.println("admin 실행");
-				List usersList = userService.listUsers();
-				mav.addObject("usersList", usersList);
-				// mav.setViewName("redirect:/user/adminPage.do");
+		UserVO userVO = (UserVO)session.getAttribute("user");
+		List usersList = null;
+		if(userVO != null) {
+			System.out.println("접속 완료");
+			if(userVO.getUser_id().equals("admin")) {
+				System.out.println("admin 페이지");
+				usersList = userService.listUsers();
 			} else {
-//				List usersList = userService.selectListId(my_id);
-				UserVO user2 = userService.selectId(my_id);
-				System.out.println(user2);
-				mav.addObject("usersList", user);
-				System.out.println(my_id + "님의 마이페이지");
-				// mav.setViewName("redirect:/user/userPage.do");
+				System.out.println(userVO.getUser_id() + "님 정보 출력");
+				usersList = userService.selectListId(userVO.getUser_id());
 			}
+		} else {
+			System.out.println("접속 실패");
+			scriptAlertUtils.alertAndBackPage(response, "로그인이 필요한 기능입니다.");
 		}
+		mav.addObject("usersList", usersList);
+		System.out.println("myPageForm 실행 확인");
 		return mav;
 	}
 
@@ -195,7 +217,9 @@ public class UserControllerImpl implements UserController {
 	public ModelAndView adminPage(UserVO user, RedirectAttributes rAttr, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("/user/adminPage");
+		List usersList = userService.listUsers();
+		mav.addObject("usersList", usersList);
+		mav.setViewName("/redirect:/user/myPage.do");
 		return mav;
 	}
 
@@ -203,16 +227,21 @@ public class UserControllerImpl implements UserController {
 	public ModelAndView userPage(UserVO user, RedirectAttributes rAttr, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("/user/userPage");
+		mav.setViewName("/user/user/myPage.do");
 		return mav;
 	}
 	
+	// 게시판
 	@RequestMapping(value = "/board/board.do")
 	@Override
 	public ModelAndView board(UserVO user, RedirectAttributes rAttr, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
-		ModelAndView mav = new ModelAndView();
+		request.setCharacterEncoding("utf-8");
+		String viewName = getViewName(request);
+		ModelAndView mav = new ModelAndView(viewName);
 		return mav;
 	}
 	
 }
+
+

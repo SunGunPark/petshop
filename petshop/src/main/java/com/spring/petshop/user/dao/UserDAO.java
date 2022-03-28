@@ -20,4 +20,7 @@ public interface UserDAO {
 	public UserVO selectId(String id);
 
 	public List selectListId(String id) throws DataAccessException;
+	
+	public int idChk(UserVO userVO) throws DataAccessException;
+	
 }

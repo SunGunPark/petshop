@@ -56,4 +56,12 @@ public class UserDAOImpl implements UserDAO {
 		return usersList;
 	}
 
+	@Override
+	public int idChk(UserVO userVO) throws DataAccessException {
+		int result = sqlSession.selectOne("mapper.user.idChk", userVO);
+		return result;
+	}
+	
+	
+
 }

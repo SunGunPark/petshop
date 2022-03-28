@@ -153,11 +153,11 @@ public class UserControllerImpl implements UserController {
 	@RequestMapping(value = "/user/logout.do", method = RequestMethod.GET)
 	public ModelAndView logout(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		ModelAndView mav = new ModelAndView();
-
+		ScriptAlertUtils scriptAlertUtils = new ScriptAlertUtils();
 		HttpSession session = request.getSession();
 		session.invalidate();
-
-		mav.setViewName("redirect:/");
+		
+		scriptAlertUtils.alertAndMovePage(response, "정상적으로 로그아웃되었습니다.", "/petshop");
 		return mav;
 	}
 
@@ -166,7 +166,7 @@ public class UserControllerImpl implements UserController {
 	public ModelAndView modUser(@ModelAttribute("user") UserVO user, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		request.setCharacterEncoding("utf-8");
-		
+		ScriptAlertUtils scriptAlertUtils = new ScriptAlertUtils();
 		String action = request.getParameter("action");
 
 		ModelAndView mav = new ModelAndView();
@@ -179,8 +179,7 @@ public class UserControllerImpl implements UserController {
 		} else if (action.equals("mod")) {
 			System.out.println("DB 후 : " + user.getU_name());
 			userService.modUser(user);
-			
-			mav.setViewName("redirect:/");
+			scriptAlertUtils.alertAndMovePage(response, "정보 수정이 완료되었습니다.", "/petshop");
 		}
 		return mav;
 	}

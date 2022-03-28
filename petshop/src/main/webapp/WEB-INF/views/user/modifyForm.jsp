@@ -26,8 +26,7 @@
 	<table  align="center">
 	   <tr>
 	      <td width="200"><p align="right">아이디</td>
-	      <td width="400"><input type="text" name="user_id" value="${userVO.user_id }" readonly="readonly">
-	      	<script>id</script>
+	      <td width="400"><input type="text" name="user_id" value="${param.id }" readonly="readonly">
 	      </td>
 	      <input type="hidden" name="action" value="mod">
 	   </tr>

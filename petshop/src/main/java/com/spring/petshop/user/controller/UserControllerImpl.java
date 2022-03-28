@@ -25,7 +25,7 @@ import com.spring.petshop.user.service.UserService;
 import com.spring.petshop.user.vo.UserVO;
 
 @EnableAspectJAutoProxy
-@Controller("UserController")
+@Controller("userController")
 public class UserControllerImpl implements UserController {
 
 	@Autowired
@@ -49,14 +49,15 @@ public class UserControllerImpl implements UserController {
 	public ModelAndView addUser(UserVO user, RedirectAttributes rAttr,HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
 		request.setCharacterEncoding("utf-8");
+		ScriptAlertUtils scriptAlertUtils = new ScriptAlertUtils();
 		int result = userService.idChk(user);
 		ModelAndView mav = new ModelAndView();
 		if(result == 0) {
 			result = userService.addUser(user);
-			mav.setViewName("redirect:/");
+			scriptAlertUtils.alertAndMovePage(response, "회원가입에 성공하였습니다.", "/petshop");
 		}else if(result == 1) {
 			rAttr.addAttribute("result", "registerFailed");
-			mav.setViewName("redirect:/");
+			scriptAlertUtils.alertAndBackPage(response, "중복된 아이디입니다.");
 		}
 		return mav;
 	}
@@ -99,6 +100,7 @@ public class UserControllerImpl implements UserController {
 	public ModelAndView login(UserVO user, RedirectAttributes rAttr, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		ModelAndView mav = new ModelAndView();
+		ScriptAlertUtils scriptAlertUtils = new ScriptAlertUtils();
 		mav.setViewName("/user/login");
 		userVO = userService.login(user);
 		if (userVO != null) {
@@ -106,9 +108,10 @@ public class UserControllerImpl implements UserController {
 			session.setAttribute("user", userVO);
 			session.setAttribute("isLogOn", true);
 			System.out.println("로그인 성공");
-			mav.setViewName("redirect:/");
+			scriptAlertUtils.alertAndMovePage(response, userVO.getU_name()+"님 환영합니다.", "/petshop");
 		} else{
 			rAttr.addAttribute("result", "loginFailed");
+			scriptAlertUtils.alertAndBackPage(response, "로그인에 실패하였습니다.");
 			System.out.println("로그인 실패");
 			//mav.setViewName("redirect:/user/login.do");
 		}
@@ -163,13 +166,13 @@ public class UserControllerImpl implements UserController {
 	public ModelAndView modUser(@ModelAttribute("user") UserVO user, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		request.setCharacterEncoding("utf-8");
-
+		
 		String action = request.getParameter("action");
 
 		ModelAndView mav = new ModelAndView();
 		if (action == null) {
-			String id = request.getParameter("id");
-			UserVO userVO = userService.selectId(id);
+			String user_id = request.getParameter("user_id");
+			UserVO userVO = userService.selectId(user_id);
 			System.out.println("DB 전 : " + userVO.getU_name());
 			mav.addObject("userVO", userVO);
 			mav.setViewName(getViewName(request));
@@ -177,7 +180,7 @@ public class UserControllerImpl implements UserController {
 			System.out.println("DB 후 : " + user.getU_name());
 			userService.modUser(user);
 			
-			mav.setViewName("redirect:/user/listUsers.do");
+			mav.setViewName("redirect:/");
 		}
 		return mav;
 	}
@@ -210,24 +213,6 @@ public class UserControllerImpl implements UserController {
 		}
 		mav.addObject("usersList", usersList);
 		System.out.println("myPageForm 실행 확인");
-		return mav;
-	}
-
-	@RequestMapping(value = "/user/adminPage.do")
-	public ModelAndView adminPage(UserVO user, RedirectAttributes rAttr, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		ModelAndView mav = new ModelAndView();
-		List usersList = userService.listUsers();
-		mav.addObject("usersList", usersList);
-		mav.setViewName("/redirect:/user/myPage.do");
-		return mav;
-	}
-
-	@RequestMapping(value = "/user/userPage.do")
-	public ModelAndView userPage(UserVO user, RedirectAttributes rAttr, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		ModelAndView mav = new ModelAndView();
-		mav.setViewName("/user/user/myPage.do");
 		return mav;
 	}
 	

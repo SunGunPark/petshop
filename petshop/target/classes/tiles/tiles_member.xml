@@ -32,6 +32,10 @@
  		<put-attribute name="title" value="마이페이지" />
  		<put-attribute name="body"  value="/WEB-INF/views/user/myPageForm.jsp" />
  	</definition>
+ 	<definition name="/user/modifyForm" extends="baseLayout">
+ 		<put-attribute name="title" value="마이페이지" />
+ 		<put-attribute name="body"  value="/WEB-INF/views/user/modifyForm.jsp" />
+ 	</definition>
  	<definition name="/user/registerForm" extends="baseLayout">
  	 	<put-attribute name="title" value="회원가입" />
  		<put-attribute name="body"  value="/WEB-INF/views/user/registerForm.jsp" />

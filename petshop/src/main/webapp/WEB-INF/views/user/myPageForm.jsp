@@ -32,7 +32,7 @@ request.setCharacterEncoding("UTF-8");
 				<td>${user.u_name}</td>
 				<td>${user.u_phone}</td>
 				<td>${user.u_address}</td>
-				<td><a href="${contextPath}/user/modUser.do">수정하기</a></td>
+				<td><a href="${contextPath}/user/modifyForm.do?id=${user.user_id }">수정하기</a></td>
 				<td><a href="${contextPath}/user/removeUser.do?id=${user.user_id }">삭제하기</a></td>
 			</tr>
 		</c:forEach>

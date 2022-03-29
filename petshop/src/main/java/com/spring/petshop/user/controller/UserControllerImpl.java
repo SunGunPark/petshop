@@ -215,17 +215,6 @@ public class UserControllerImpl implements UserController {
 		return mav;
 	}
 	
-	// 게시판
-	@RequestMapping(value = "/board/board.do")
-	@Override
-	public ModelAndView board(UserVO user, RedirectAttributes rAttr, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		request.setCharacterEncoding("utf-8");
-		String viewName = getViewName(request);
-		ModelAndView mav = new ModelAndView(viewName);
-		return mav;
-	}
-	
 }
 
 

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+      PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.board">
+	<resultMap id="bResult" type="boardVO">
+		<result property="boardNo" column="boardNo" />
+		<result property="b_title" column="b_title" />
+        <result property="b_date" column="b_date" />
+        <result property="b_content" column="b_content" />
+        <result property="b_type" column="b_type" />
+        <result property="user_id" column="user_id" />
+	</resultMap> 
+
+	
+	<select id="selectBoardList" resultMap="bResult">
+		<![CDATA[
+			select * from p_board order by boardNO asc
+		]]>
+	</select>
+	
+	<select id="selectBoard" resultType="boardVO" parameterType="int">
+		<![CDATA[
+			select * from p_board where boardNo = #{boardNo}
+		]]>
+	</select>
+	
+	<insert id="insertBoard" parameterType="boardVO">
+		<![CDATA[
+			insert into p_board(boardNo, user_id, b_title, b_type, b_content)
+				values(seq_BoardNo.nextval, #{user_id}, #{b_title}, #{b_type}, #{b_content})
+		]]>
+	</insert>
+	
+	<delete id="deleteBoard" parameterType="Integer">
+		<![CDATA[
+			delete from p_board where boardNo = #{boardNo}
+		]]>
+	</delete>
+	
+	<update id="updateBoard" parameterType="java.util.Map">
+		<![CDATA[
+			update p_board set b_title=#{b_title}, b_content=#{b_content}
+				where boardNo=#{boardNo}
+		]]>
+	</update>
+	
+</mapper>

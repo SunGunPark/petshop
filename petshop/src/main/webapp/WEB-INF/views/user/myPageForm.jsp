@@ -32,8 +32,30 @@ request.setCharacterEncoding("UTF-8");
 				<td>${user.u_name}</td>
 				<td>${user.u_phone}</td>
 				<td>${user.u_address}</td>
-				<td><a href="${contextPath}/user/modifyForm.do?id=${user.user_id }">수정하기</a></td>
-				<td><a href="${contextPath}/user/removeUser.do?id=${user.user_id }">삭제하기</a></td>
+				<td><a
+					href="${contextPath}/user/modifyForm.do?id=${user.user_id }">수정하기</a></td>
+				<td><a
+					href="${contextPath}/user/removeUser.do?id=${user.user_id }">삭제하기</a></td>
+			</tr>
+		</c:forEach>
+	</table>
+	<h2>구매 상품</h2>
+	<table border="1" align="center" width="80%">
+		<tr align="center" bgcolor="lightblue">
+			<td><b>번호</b></td>
+			<td><b>이름</b></td>
+			<td><b>분류</b></td>
+			<td><b>가격</b></td>
+			<td><b>삭제</b></td>
+		</tr>
+		<c:forEach var="item" items="${purchaseList}">
+			<tr align="center">
+				<td>${item.itemno}</td>
+				<td>${item.i_name}</td>
+				<td>${item.i_class}</td>
+				<td>${item.i_price}</td>
+				<td><a
+					href="${contextPath}/user/removeItem.do?item=${item.itemno }">삭제하기</a></td>
 			</tr>
 		</c:forEach>
 	</table>

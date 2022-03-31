@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+      PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.item">
+	<resultMap id="iResult" type="itemVO">
+		<result property="itemno" column="itemno" />
+		<result property="i_name" column="i_name" />
+        <result property="i_price" column="i_price" />
+        <result property="i_class" column="i_class" />
+        <result property="i_basket" column="i_basket" />
+        <result property="user_id" column="user_id" />
+	</resultMap> 
+
+	
+	<select id="selectItemListByClass" resultMap="iResult" parameterType="String">
+		<![CDATA[
+			select * from p_item where i_class = #{i_class}
+		]]>
+	</select>
+	
+</mapper>

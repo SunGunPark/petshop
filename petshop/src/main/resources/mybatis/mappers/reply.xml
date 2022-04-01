@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+      PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.reply">
+	<resultMap id="rResult" type="replyVO">
+		<result property="boardNo" column="boardNo" />
+		<result property="replyNo" column="replyNo" />
+        <result property="r_content" column="r_content" />
+        <result property="r_writer" column="r_writer" />
+        <result property="r_date" column="r_date" />
+	</resultMap>
+	
+	<!-- 댓글 조회 -->
+	<select id="selectReplyList" resultMap="rResult">
+		<![CDATA[
+			select replyNo, r_content, r_writer, r_date
+			from p_reply
+			where boardNo = #{boardNo}
+		]]>
+	</select>
+	
+	<insert id="writeReply" parameterType="replyVO">
+		<![CDATA[
+			insert into p_reply(boardNo, replyNo, r_content, r_writer)
+			values(#{boardNo} , seq_replyNo.nextval, #{r_content}, #{r_writer})
+		]]>
+	</insert>
+	
+	<delete id="deleteReply" parameterType="replyVO">
+		delete from p_reply
+		where replyNo = #{replyNo}
+	</delete>
+	
+</mapper>

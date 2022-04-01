@@ -12,7 +12,7 @@ import com.spring.petshop.board.vo.BoardVO;
 
 @Service
 @Transactional(propagation = Propagation.REQUIRED)
-public class BoardServiceImpl implements BoardService{
+public class BoardServiceImpl implements BoardService {
 	
 	@Autowired
 	BoardDAO boardDAO;

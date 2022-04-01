@@ -56,7 +56,7 @@
 			<td>날짜</td>
 		</tr>
 	<c:choose>
-		<c:when test="${boardList == null }">
+		<c:when test="${empty boardList}">
 			<tr height="10">
 				<td colspan="5">
 					<p align="center">
@@ -65,7 +65,7 @@
 				</td>
 			</tr>
 		</c:when>
-		<c:when test="${boardList != null }">
+		<c:when test="${!empty boardList}">
 			<c:forEach	var="board" items="${boardList}" varStatus="articleNum">
 				<tr align="center">
 					<td>${articleNum.count }</td>

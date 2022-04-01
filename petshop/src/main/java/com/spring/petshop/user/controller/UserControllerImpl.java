@@ -21,6 +21,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.spring.petshop.common.alert.ScriptAlertUtils;
+import com.spring.petshop.common.view.ViewTools;
 import com.spring.petshop.user.service.UserService;
 import com.spring.petshop.user.vo.UserVO;
 
@@ -36,7 +37,8 @@ public class UserControllerImpl implements UserController {
 	@Override
 	@RequestMapping(value = "/user/listUsers.do", method = RequestMethod.GET)
 	public ModelAndView listUsers(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		String viewName = getViewName(request);
+		ViewTools viewTools = new ViewTools();
+		String viewName = viewTools.getViewName(request);
 		List usersList = userService.listUsers();
 		ModelAndView mav = new ModelAndView(viewName);
 		mav.addObject("usersList", usersList);
@@ -88,7 +90,8 @@ public class UserControllerImpl implements UserController {
 	@RequestMapping(value = "/user/*Form.do", method = RequestMethod.GET)
 	public ModelAndView form(@RequestParam(value = "result", required = false) String result,
 			HttpServletRequest request, HttpServletResponse response) throws Exception {
-		String viewName = getViewName(request);
+		ViewTools viewTools = new ViewTools();
+		String viewName = viewTools.getViewName(request);
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("result", result);
 		mav.setViewName(viewName);
@@ -118,37 +121,6 @@ public class UserControllerImpl implements UserController {
 		return mav;
 	}
 
-	private String getViewName(HttpServletRequest request) throws Exception {
-		String contextPath = request.getContextPath();
-		String uri = (String) request.getAttribute("javax.servlet.include.request_uri");
-		if (uri == null || uri.trim().equals("")) {
-			uri = request.getRequestURI();
-		}
-
-		int begin = 0;
-		if (!((contextPath == null) || ("".equals(contextPath)))) {
-			begin = contextPath.length();
-		}
-
-		int end;
-		if (uri.indexOf(";") != -1) {
-			end = uri.indexOf(";");
-		} else if (uri.indexOf("?") != -1) {
-			end = uri.indexOf("?");
-		} else {
-			end = uri.length();
-		}
-
-		String viewName = uri.substring(begin, end);
-		if (viewName.indexOf(".") != -1) {
-			viewName = viewName.substring(0, viewName.lastIndexOf("."));
-		}
-		if (viewName.lastIndexOf("/") != -1) {
-			viewName = viewName.substring(viewName.lastIndexOf("/", 1), viewName.length());
-		}
-		return viewName;
-	}
-
 	@Override
 	@RequestMapping(value = "/user/logout.do", method = RequestMethod.GET)
 	public ModelAndView logout(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -167,6 +139,7 @@ public class UserControllerImpl implements UserController {
 			HttpServletResponse response) throws Exception {
 		request.setCharacterEncoding("utf-8");
 		ScriptAlertUtils scriptAlertUtils = new ScriptAlertUtils();
+		ViewTools viewTools = new ViewTools();
 		String action = request.getParameter("action");
 
 		ModelAndView mav = new ModelAndView();
@@ -175,7 +148,7 @@ public class UserControllerImpl implements UserController {
 			UserVO userVO = userService.selectId(user_id);
 			System.out.println("DB 전 : " + userVO.getU_name());
 			mav.addObject("userVO", userVO);
-			mav.setViewName(getViewName(request));
+			mav.setViewName(viewTools.getViewName(request));
 		} else if (action.equals("mod")) {
 			System.out.println("DB 후 : " + user.getU_name());
 			userService.modUser(user);
@@ -192,7 +165,8 @@ public class UserControllerImpl implements UserController {
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html; charset=utf-8");
 		ScriptAlertUtils scriptAlertUtils = new ScriptAlertUtils();
-		String viewName = getViewName(request);
+		ViewTools viewTools = new ViewTools();
+		String viewName = viewTools.getViewName(request);
 		ModelAndView mav = new ModelAndView(viewName);
 		HttpSession session = request.getSession();
 		UserVO userVO = (UserVO)session.getAttribute("user");

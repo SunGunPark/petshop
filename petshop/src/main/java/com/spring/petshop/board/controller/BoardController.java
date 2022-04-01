@@ -10,6 +10,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.spring.petshop.board.vo.BoardVO;
+import com.spring.petshop.reply.vo.ReplyVO;
 
 
 public interface BoardController {
@@ -25,4 +26,8 @@ public interface BoardController {
 	public ModelAndView updateBoard(@ModelAttribute BoardVO boardVO, MultipartHttpServletRequest request, HttpServletResponse response) throws Exception;
 	
 	public ResponseEntity removeBoard(@RequestParam("boardNo") int boardNo, HttpServletRequest request, HttpServletResponse response) throws Exception;
+
+	public ModelAndView writeReply(@ModelAttribute("replyVO") ReplyVO replyVO, HttpServletRequest request, HttpServletResponse response) throws Exception;
+	
+	public ModelAndView deleteReply(@ModelAttribute("replyVO") ReplyVO replyVO, HttpServletRequest request, HttpServletResponse response) throws Exception;
 }

@@ -22,6 +22,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.spring.petshop.board.service.BoardService;
 import com.spring.petshop.board.vo.BoardVO;
+import com.spring.petshop.reply.service.ReplyService;
+import com.spring.petshop.reply.vo.ReplyVO;
 
 
 @Controller
@@ -30,14 +32,17 @@ public class BoardControllerImpl implements BoardController{
 	@Autowired
 	BoardService boardService;
 	@Autowired
+	ReplyService replyService;
+	@Autowired
 	BoardVO boardVO;
+	@Autowired
+	ReplyVO replyVO;
 	
 	@Override
 	@RequestMapping(value="/board/boardList.do", method=RequestMethod.GET)
 	public ModelAndView Boardlist(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		//String viewName = (String)request.getAttribute("viewName");
-		String viewName = getViewName(request);
-		System.out.println(viewName);
+
+		String viewName = (String)request.getAttribute("viewName");
 		List<BoardVO> boardList = boardService.Boardlist();
 		ModelAndView mav = new ModelAndView(viewName);
 		mav.addObject("boardList", boardList);
@@ -46,12 +51,17 @@ public class BoardControllerImpl implements BoardController{
 	
 	
 	@RequestMapping(value="/board/boardView.do", method=RequestMethod.GET)
-	public ModelAndView viewArticle(@RequestParam("boardNo") int articleNo, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ModelAndView viewArticle(@RequestParam("boardNo") int boardNo, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
 		String viewName = (String) request.getAttribute("viewName");
-		BoardVO boardVO = boardService.boardView(articleNo);
+		BoardVO boardVO = boardService.boardView(boardNo);
+		
+		// 댓글리스트
+		List<ReplyVO> replyList = replyService.selectReplyList(boardNo);
+		
 		ModelAndView mav = new ModelAndView(viewName);
 		mav.addObject("boardVO", boardVO);
+		mav.addObject("replyList", replyList);
 		return mav;
 	}
 	
@@ -108,49 +118,47 @@ public class BoardControllerImpl implements BoardController{
 			
 			message = "<script>";
 			message += "alert('글이 삭제 되었습니다.');";
-			message += "location.href='/petshop/board/boardList.do';";
+			message += "location.href='/pro12/board/boardList.do';";
 			message +="</script>";
 			
 			resEnt = new ResponseEntity(message, responseHeaders, HttpStatus.CREATED);
 		}catch(Exception e) {
 			message = "<script>";
-			message += "alert('오류가 발생했습니다. 다시 삭제 하세요.');";
-			message += "location.href='/petshop/board/boardList.do';";
+			message += "alert('댓글이 있는 게시물은 삭제할 수 없습니다');";
+			message += "location.href='/pro12/board/boardList.do';";
 			message += "</script>";
 			resEnt = new ResponseEntity(message, responseHeaders, HttpStatus.CREATED);
 		}
 		return resEnt;
 	}
 	
-	private String getViewName(HttpServletRequest request) throws Exception {
-		String contextPath = request.getContextPath();
-		String uri = (String) request.getAttribute("javax.servlet.include.request_uri");
-		if (uri == null || uri.trim().equals("")) {
-			uri = request.getRequestURI();
-		}
-
-		int begin = 0;
-		if (!((contextPath == null) || ("".equals(contextPath)))) {
-			begin = contextPath.length();
-		}
-
-		int end;
-		if (uri.indexOf(";") != -1) {
-			end = uri.indexOf(";");
-		} else if (uri.indexOf("?") != -1) {
-			end = uri.indexOf("?");
-		} else {
-			end = uri.length();
-		}
-
-		String viewName = uri.substring(begin, end);
-		if (viewName.indexOf(".") != -1) {
-			viewName = viewName.substring(0, viewName.lastIndexOf("."));
-		}
-		if (viewName.lastIndexOf("/") != -1) {
-			viewName = viewName.substring(viewName.lastIndexOf("/", 1), viewName.length());
-		}
-		return viewName;
+	
+	//댓글 쓰기
+	@Override
+	@RequestMapping(value="/board/writeReply.do", method=RequestMethod.POST)
+	public ModelAndView writeReply(@ModelAttribute("replyVO") ReplyVO replyVO, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		
+		request.setCharacterEncoding("UTF-8");
+		String boardNo = request.getParameter("baordNo");
+		replyService.writeReply(replyVO);
+		ModelAndView mav = new ModelAndView("redirect:/board/boardView.do?boardNo="+boardNo);
+		return mav;
 	}
+
+
+	//댓글 제거
+	@Override
+	@RequestMapping(value="/board/deleteReply.do", method=RequestMethod.GET)
+	public ModelAndView deleteReply(@ModelAttribute("replyVO") ReplyVO replyVO, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		
+		replyService.deleteReply(replyVO);
+		String boardNo = request.getParameter("baordNo");
+		ModelAndView mav = new ModelAndView("redirect:/board/boardView.do?boardNo="+boardNo);
+		return mav;
+	}
+	
+	
+	
+	
 	
 }

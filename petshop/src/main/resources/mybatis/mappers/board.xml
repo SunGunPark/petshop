@@ -28,8 +28,8 @@
 	
 	<insert id="insertBoard" parameterType="boardVO">
 		<![CDATA[
-			insert into p_board(boardNo, user_id, b_title, b_type, b_content)
-				values(seq_BoardNo.nextval, #{user_id}, #{b_title}, #{b_type}, #{b_content})
+			insert into p_board(boardNo, b_title, b_type, b_content, user_id)
+				values(SEQ_BOARDNO.nextval, #{b_title}, #{b_type}, #{b_content}, #{user_id})
 		]]>
 	</insert>
 	

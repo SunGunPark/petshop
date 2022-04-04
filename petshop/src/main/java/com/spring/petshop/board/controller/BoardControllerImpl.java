@@ -118,14 +118,14 @@ public class BoardControllerImpl implements BoardController{
 			
 			message = "<script>";
 			message += "alert('글이 삭제 되었습니다.');";
-			message += "location.href='/pro12/board/boardList.do';";
+			message += "location.href='/petshop/board/boardList.do';";
 			message +="</script>";
 			
 			resEnt = new ResponseEntity(message, responseHeaders, HttpStatus.CREATED);
 		}catch(Exception e) {
 			message = "<script>";
 			message += "alert('댓글이 있는 게시물은 삭제할 수 없습니다');";
-			message += "location.href='/pro12/board/boardList.do';";
+			message += "location.href='/petshop/board/boardList.do';";
 			message += "</script>";
 			resEnt = new ResponseEntity(message, responseHeaders, HttpStatus.CREATED);
 		}

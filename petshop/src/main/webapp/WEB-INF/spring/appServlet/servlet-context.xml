@@ -42,6 +42,12 @@
 		</beans:property>	
 	</beans:bean>
 	
-	
+		<interceptors>
+		<interceptor>
+			<mapping path="/*/*.do" />
+			<beans:bean
+				class="com.spring.petshop.common.interceptor.ViewNameInterceptor" />
+		</interceptor>
+	</interceptors>
 	
 </beans:beans>

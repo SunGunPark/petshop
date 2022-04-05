@@ -47,15 +47,6 @@
        align-items: center;
    }
 </style>
-<c:choose>
-<c:when test="${result=='loginFailed' }">
-   <script>
-      window.onload = function(){
-         alert('아이디나 비밀번호가 틀렸습니다. 다시 로그인하세요.');
-      }
-   </script>
-</c:when>
-</c:choose>
 </head>
 <body>
    <form action="${contextPath}/user/login.do" method="post">   

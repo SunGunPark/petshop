@@ -48,28 +48,37 @@ public class UserControllerImpl implements UserController {
 	// 유저 로그인
 	@Override
 	@RequestMapping(value = "/user/register.do")
-	public ModelAndView addUser(UserVO user, RedirectAttributes rAttr,HttpServletRequest request, HttpServletResponse response)
-			throws Exception {
+	public ModelAndView addUser(UserVO user, RedirectAttributes rAttr, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 		request.setCharacterEncoding("utf-8");
 		ScriptAlertUtils scriptAlertUtils = new ScriptAlertUtils();
+		if (user.getU_pwd() == null || user.getU_pwd().equals("")) {
+			scriptAlertUtils.alertAndBackPage(response, "잘못된 비밀번호입니다.");
+		} else if (user.getU_name() == null || user.getU_name().equals("")) {
+			scriptAlertUtils.alertAndBackPage(response, "잘못된 이름입니다.");
+		} else if (user.getU_phone() == null || user.getU_phone().equals("")) {
+			scriptAlertUtils.alertAndBackPage(response, "잘못된 전화번호입니다.");
+		} else if (user.getU_address() == null || user.getU_address().equals("")) {
+			scriptAlertUtils.alertAndBackPage(response, "잘못된 주소입니다.");
+		} 
 		int result = userService.idChk(user);
 		ModelAndView mav = new ModelAndView();
-		if(result == 0) {
+		if (result == 0) {
 			result = userService.addUser(user);
 			scriptAlertUtils.alertAndMovePage(response, "회원가입에 성공하였습니다.", "/petshop");
-		}else if(result == 1) {
+		} else if (result == 1) {
 			rAttr.addAttribute("result", "registerFailed");
 			scriptAlertUtils.alertAndBackPage(response, "중복된 아이디입니다.");
 		}
 		return mav;
 	}
-	
-	@RequestMapping(value="/idChk.do" , method = RequestMethod.POST)
+
+	@RequestMapping(value = "/idChk.do", method = RequestMethod.POST)
 	public int idChk(UserVO user) throws Exception {
 		int result = userService.idChk(user);
 		return result;
 	}
-	
+
 	@Override
 	@RequestMapping(value = "/user/removeUser.do")
 	public ModelAndView removeUser(String id, HttpServletRequest request, HttpServletResponse response)
@@ -77,8 +86,8 @@ public class UserControllerImpl implements UserController {
 		request.setCharacterEncoding("utf-8");
 		userService.removeUser(id);
 		HttpSession session = request.getSession();
-		UserVO userVO = (UserVO)session.getAttribute("user");
-		if(!userVO.getUser_id().equals("admin")) {
+		UserVO userVO = (UserVO) session.getAttribute("user");
+		if (!userVO.getUser_id().equals("admin")) {
 			session.invalidate();
 		}
 		ScriptAlertUtils scriptAlertUtils = new ScriptAlertUtils();
@@ -110,13 +119,12 @@ public class UserControllerImpl implements UserController {
 			HttpSession session = request.getSession();
 			session.setAttribute("user", userVO);
 			session.setAttribute("isLogOn", true);
-			System.out.println("로그인 성공");
-			scriptAlertUtils.alertAndMovePage(response, userVO.getU_name()+"님 환영합니다.", "/petshop");
-		} else{
+			scriptAlertUtils.alertAndMovePage(response, userVO.getU_name() + "님 환영합니다.", "/petshop");
+		} else {
 			rAttr.addAttribute("result", "loginFailed");
 			scriptAlertUtils.alertAndBackPage(response, "로그인에 실패하였습니다.");
 			System.out.println("로그인 실패");
-			//mav.setViewName("redirect:/user/login.do");
+			// mav.setViewName("redirect:/user/login.do");
 		}
 		return mav;
 	}
@@ -128,7 +136,7 @@ public class UserControllerImpl implements UserController {
 		ScriptAlertUtils scriptAlertUtils = new ScriptAlertUtils();
 		HttpSession session = request.getSession();
 		session.invalidate();
-		
+
 		scriptAlertUtils.alertAndMovePage(response, "정상적으로 로그아웃되었습니다.", "/petshop");
 		return mav;
 	}
@@ -160,7 +168,7 @@ public class UserControllerImpl implements UserController {
 	// 마이페이지
 	@Override
 	@RequestMapping(value = "/user/myPageForm.do")
-	public ModelAndView myPageForm(UserVO user, RedirectAttributes rAttr,HttpServletRequest request,
+	public ModelAndView myPageForm(UserVO user, RedirectAttributes rAttr, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html; charset=utf-8");
@@ -169,11 +177,11 @@ public class UserControllerImpl implements UserController {
 		String viewName = viewTools.getViewName(request);
 		ModelAndView mav = new ModelAndView(viewName);
 		HttpSession session = request.getSession();
-		UserVO userVO = (UserVO)session.getAttribute("user");
+		UserVO userVO = (UserVO) session.getAttribute("user");
 		List usersList = null;
-		if(userVO != null) {
+		if (userVO != null) {
 			System.out.println("접속 완료");
-			if(userVO.getUser_id().equals("admin")) {
+			if (userVO.getUser_id().equals("admin")) {
 				System.out.println("admin 페이지");
 				usersList = userService.listUsers();
 			} else {
@@ -188,7 +196,5 @@ public class UserControllerImpl implements UserController {
 		System.out.println("myPageForm 실행 확인");
 		return mav;
 	}
-	
+
 }
-
-

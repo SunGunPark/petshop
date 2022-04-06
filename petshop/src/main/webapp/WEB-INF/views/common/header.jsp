@@ -23,7 +23,7 @@
            </a>
        </div>
        <div class="header_column">
-           <h1>Dog Brand</h1>
+           <div class="title">Dog Brand</div>
        </div>
        <div class="header_column">
            <ul class="login_menu">

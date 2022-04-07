@@ -21,10 +21,11 @@
    }
    #sidebar-left {
       width:15%;
-      height: 330px;
+      height: 288px;
       padding: 5px;
       margin-right: 5px;
       margin-bottom: 300px;
+      margin-top : 5px;
       float: left;
       background-color: silver;
       border: 0px solid #bcbcbc;

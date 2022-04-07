@@ -21,6 +21,7 @@ String user_id = userVO.getUser_id();
 	rel="stylesheet"
 	integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
 	crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 <!-- 글꼴 -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -51,8 +52,8 @@ String user_id = userVO.getUser_id();
 										<h4>${user.user_id }</h4>
 										<p class="text-secondary mb-1">${user.u_name }</p>
 										<p class="text-muted font-size-sm">${user.u_address }</p>
-										<button class="btn btn-primary">장바구니</button>
-										<button class="btn btn-outline-primary">로그아웃</button>
+										<a class="btn btn-primary" href="#">장바구니</a>
+										<a class="btn btn-outline-primary" href="/petshop/user/logout.do">로그아웃</a>
 									</div>
 								</div>
 							</div>
@@ -98,7 +99,7 @@ String user_id = userVO.getUser_id();
 								<hr>
 								<div class="row">
 									<div class="col-sm-12">
-										<a class="btn btn-success" data-bs-toggle="collapse" href="#item_table" role="button" aria-expanded="false" aria-controls="item_table">구매목록</a>
+										<button class="btn btn-success" data-bs-toggle="collapse" data-bs-target="#item_table">구매목록</button>
 										<div id="item_table" class="collapse">
 											<div class="card card-body">
 											<table class="table">

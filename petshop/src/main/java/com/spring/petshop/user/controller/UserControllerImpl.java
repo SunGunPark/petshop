@@ -39,11 +39,12 @@ public class UserControllerImpl implements UserController {
 	private UserVO userVO;
 	@Autowired
 	private BuyService buyService;
-
+	
+	ViewTools viewTools = new ViewTools();
+	
 	@Override
 	@RequestMapping(value = "/user/listUsers.do", method = RequestMethod.GET)
 	public ModelAndView listUsers(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		ViewTools viewTools = new ViewTools();
 		String viewName = viewTools.getViewName(request);
 		List usersList = userService.listUsers();
 		ModelAndView mav = new ModelAndView(viewName);
@@ -105,7 +106,6 @@ public class UserControllerImpl implements UserController {
 	@RequestMapping(value = "/user/*Form.do", method = RequestMethod.GET)
 	public ModelAndView form(@RequestParam(value = "result", required = false) String result,
 			HttpServletRequest request, HttpServletResponse response) throws Exception {
-		ViewTools viewTools = new ViewTools();
 		String viewName = viewTools.getViewName(request);
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("result", result);
@@ -153,7 +153,6 @@ public class UserControllerImpl implements UserController {
 			HttpServletResponse response) throws Exception {
 		request.setCharacterEncoding("utf-8");
 		ScriptAlertUtils scriptAlertUtils = new ScriptAlertUtils();
-		ViewTools viewTools = new ViewTools();
 		String action = request.getParameter("action");
 
 		ModelAndView mav = new ModelAndView();
@@ -179,7 +178,6 @@ public class UserControllerImpl implements UserController {
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html; charset=utf-8");
 		ScriptAlertUtils scriptAlertUtils = new ScriptAlertUtils();
-		ViewTools viewTools = new ViewTools();
 		String viewName = viewTools.getViewName(request);
 		ModelAndView mav = new ModelAndView(viewName);
 		HttpSession session = request.getSession();

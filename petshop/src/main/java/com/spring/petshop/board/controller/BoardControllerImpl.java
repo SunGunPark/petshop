@@ -38,6 +38,7 @@ public class BoardControllerImpl implements BoardController{
 	@Autowired
 	ReplyVO replyVO;
 	
+	
 	@Override
 	@RequestMapping(value="/board/boardList.do", method=RequestMethod.GET)
 	public ModelAndView Boardlist(HttpServletRequest request, HttpServletResponse response) throws Exception {

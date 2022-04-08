@@ -53,8 +53,8 @@ String user_id = userVO.getUser_id();
 										<h4>${user.user_id }</h4>
 										<p class="text-secondary mb-1">${user.u_name }</p>
 										<p class="text-muted font-size-sm">${user.u_address }</p>
-										<a class="btn btn-primary" href="#">장바구니</a> <a
-											class="btn btn-outline-primary"
+										<a class="btn btn-primary" href="/petshop/cart/cartList.do">장바구니</a>
+										<a class="btn btn-outline-primary"
 											href="/petshop/user/logout.do">로그아웃</a>
 									</div>
 								</div>
@@ -116,14 +116,14 @@ String user_id = userVO.getUser_id();
 														</tr>
 													</thead>
 													<tbody>
-														<c:forEach var="item" items="${purchaseList}">
+														<c:forEach var="buy" items="${map.buyList}" varStatus="i">
 															<tr>
-																<th>${item.itemno}</th>
-																<td>${item.i_name}</td>
-																<td>${item.i_class}</td>
-																<td>${item.i_price}</td>
+																<td>${buy.itemno}</td>
+																<td>${buy.i_name}</td>
+																<td>${buy.b_amount}</td>
+																<td>${buy.i_price}</td>
 																<td><a
-																	href="${contextPath}/user/removeItem.do?item=${item.itemno }">삭제하기</a></td>
+																	href="${contextPath}/buy/removeBuy.do?buyNo=${buy.buyNo}">삭제하기</a></td>
 															</tr>
 														</c:forEach>
 													</tbody>

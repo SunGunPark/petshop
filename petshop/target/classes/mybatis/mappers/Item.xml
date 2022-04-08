@@ -20,4 +20,10 @@
 		]]>
 	</select>
 	
+	<select id="selectItem" resultType="itemVO" parameterType="String">
+		<![CDATA[
+			select * from p_item where itemNo = #{itemNo}
+		]]>
+	</select>
+	
 </mapper>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+      PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+   
+<mapper namespace="mapper.cart">
+	<resultMap id="cResult" type="cartVO">
+			<result property="cartNo" column="cartNo" />
+			<result property="user_id" column="user_id" />
+			<result property="itemno" column="itemno" />
+			<result property="c_amount" column="c_amount" />
+	</resultMap>
+		
+	<select id="cartList" resultMap="cResult">
+		<![CDATA[
+			select c.cartNo, c.user_id, i.itemno, u.u_name, i.i_name, c.c_amount, i.i_price, (i_price * c_amount)money
+			from p_user u, p_item i, p_cart c
+			where u.user_id = c.user_id and i.itemno = c.itemno and c.user_id = #{user_id}
+			order by c.cartNo
+		]]>
+	</select>
+
+	<select id="sumMoney" resultType="int">
+		<![CDATA[
+			select nvl(sum(i_price * c_amount), 0)money
+			from p_cart c, p_item i
+			where i.itemno = c.itemno and
+			c.user_id = #{user_id}
+		]]>
+	</select>
+
+	<insert id="insertCart" parameterType="cartVO">
+		<![CDATA[
+			insert into p_cart(cartNo, user_id, itemno, c_amount)
+			values(seq_cartNo.nextval, #{user_id}, #{itemno}, #{c_amount})
+		]]>
+	</insert>
+
+	<select id="countCart" resultType="int">
+		<![CDATA[
+			select count(*)
+			from p_cart
+			where user_id = #{user_id} and itemno = #{itemno}
+		]]>
+	</select>
+
+	<update id="updateCart">
+		<![CDATA[
+			update p_cart
+			set c_amount = c_amount + #{c_amount}
+			where user_id = #{user_id} and itemno = #{itemno}
+		]]>
+	</update>
+		
+	<delete id="deleteCart">
+		<![CDATA[
+			delete from p_cart
+			where cartNo = #{cartNo}
+		]]>
+	</delete>
+
+	<update id="modifyCart">
+		<![CDATA[
+			update p_cart 
+			set c_amount = #{c_amount}
+			where user_id = #{user_id} and itemno = #{itemno}
+		]]>
+	</update>
+		
+		
+</mapper>

@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.spring.petshop.item.dao.ItemDAO;
+import com.spring.petshop.item.vo.ItemVO;
 
 @Service
 @Transactional(propagation = Propagation.REQUIRED)
@@ -20,6 +21,10 @@ public class ItemServiceImpl implements ItemService {
 		List itemList = null;
 		itemList = itemDAO.selectItemListByClass(i_class);
 		return itemList;
+	}
+	@Override
+	public ItemVO itemDetail(String itemNo) {
+		return itemDAO.selectItem(itemNo);
 	}
 
 }

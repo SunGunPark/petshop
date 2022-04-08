@@ -46,7 +46,7 @@ request.setCharacterEncoding("utf-8");
 	<hr>
 	<a href="/petshop/item/itemListForm.do?i_class=옷" class="side_menu">옷</a>
 	<hr>
-	<a href="#" class="side_menu">기타</a>
+	<a href="/petshop/item/itemListForm.do?i_class=기타" class="side_menu">기타</a>
 	<hr>
 	<br>
 </body>

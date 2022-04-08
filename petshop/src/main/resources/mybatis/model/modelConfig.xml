@@ -8,5 +8,7 @@
 		<typeAlias type="com.spring.petshop.board.vo.BoardVO" alias="boardVO" />
 		<typeAlias type="com.spring.petshop.item.vo.ItemVO" alias="itemVO" />
 		<typeAlias type="com.spring.petshop.reply.vo.ReplyVO" alias="replyVO" />
+		<typeAlias type="com.spring.petshop.buy.vo.BuyVO" alias="buyVO" />
+		<typeAlias type="com.spring.petshop.cart.vo.CartVO" alias="cartVO" />
 	</typeAliases>
 </configuration>

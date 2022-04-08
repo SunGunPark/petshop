@@ -2,7 +2,9 @@ package com.spring.petshop.user.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,6 +22,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.spring.petshop.buy.service.BuyService;
+import com.spring.petshop.buy.vo.BuyVO;
 import com.spring.petshop.common.alert.ScriptAlertUtils;
 import com.spring.petshop.common.view.ViewTools;
 import com.spring.petshop.user.service.UserService;
@@ -33,6 +37,8 @@ public class UserControllerImpl implements UserController {
 	private UserService userService;
 	@Autowired
 	private UserVO userVO;
+	@Autowired
+	private BuyService buyService;
 
 	@Override
 	@RequestMapping(value = "/user/listUsers.do", method = RequestMethod.GET)
@@ -179,21 +185,25 @@ public class UserControllerImpl implements UserController {
 		HttpSession session = request.getSession();
 		UserVO userVO = (UserVO) session.getAttribute("user");
 		List usersList = null;
+		Map<String, Object> map = new HashMap<String, Object>();
+		List<BuyVO> buyList = null;
 		if (userVO != null) {
 			System.out.println("접속 완료");
 			if (userVO.getUser_id().equals("admin")) {
 				System.out.println("admin 페이지");
 				usersList = userService.listUsers();
 			} else {
-				System.out.println(userVO.getUser_id() + "님 정보 출력");
+				String userId = userVO.getUser_id();
 				usersList = userService.selectListId(userVO.getUser_id());
+				buyList = buyService.buyList(userId);
+				map.put("buyList", buyList);
 			}
 		} else {
 			System.out.println("접속 실패");
 			scriptAlertUtils.alertAndBackPage(response, "로그인이 필요한 기능입니다.");
 		}
+		mav.addObject("map", map);
 		mav.addObject("usersList", usersList);
-		System.out.println("myPageForm 실행 확인");
 		return mav;
 	}
 

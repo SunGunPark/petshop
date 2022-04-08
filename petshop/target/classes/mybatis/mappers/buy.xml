@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+      PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.buy">
+	<resultMap id="cResult" type="buyVO">
+		<result property="buyNo" column="buyNo" />
+		<result property="user_id" column="user_id" />
+        <result property="itemno" column="itemno" />
+        <result property="b_amount" column="b_amount" />
+	</resultMap>
+	
+	
+	<insert id="insertBuy" parameterType="cartVO">
+		<![CDATA[
+			insert into p_buy(buyNo, user_id, itemno, b_amount)
+			select cartNo, user_id, itemno, c_amount
+			from p_cart where user_id=#{userId}
+		]]>
+	</insert>
+	
+	<select id="buyList" resultMap="cResult">
+		<![CDATA[
+			select b.buyNo, b.user_id, i.itemno, u.u_name, i.i_name, b.b_amount, i.i_price
+			from p_user u, p_item i, p_buy b
+			where u.user_id = b.user_id and i.itemno = b.itemno and b.user_id = #{user_id}
+			order by b.buyNo
+		]]>
+	</select>
+	
+	<delete id="deleteBuy">
+	<![CDATA[
+	   delete from p_buy
+	   where
+	   buyNo = #{buyNo}
+	]]>      
+  </delete>
+  
+  
+	<delete id="cartAllDelete">
+	<![CDATA[
+	 delete from p_cart
+	 where
+	 user_id = #{user_id}
+	 ]]>
+	</delete>
+  
+</mapper>

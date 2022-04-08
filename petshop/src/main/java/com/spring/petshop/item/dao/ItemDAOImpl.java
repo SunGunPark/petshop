@@ -21,4 +21,9 @@ public class ItemDAOImpl implements ItemDAO {
 		return itemList;
 	}
 
+	@Override
+	public ItemVO selectItem(String itemNo) {
+		return sqlSession.selectOne("mapper.item.selectItem", itemNo);
+	}
+
 }

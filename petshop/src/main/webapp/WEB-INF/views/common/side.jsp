@@ -10,14 +10,6 @@ request.setCharacterEncoding("utf-8");
 <html>
 <head>
 <meta charset="UTF-8">
-<!-- Bootstrap CSS -->
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
-	rel="stylesheet"
-	integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
-	crossorigin="anonymous">
-<script
-	src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 <title>사이드</title>
 <style>
 .side_menu {
@@ -39,15 +31,47 @@ request.setCharacterEncoding("utf-8");
 </style>
 </head>
 <body>
-	<br>
-	<div class="side_title">카테고리</div>
+<div class="accordion" id="accordionExample">
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="headingOne">
+      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+        카테고리
+      </button>
+    </h2>
+    <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+      <div class="accordion-body">
+      	<a href="/petshop/item/itemListForm.do?i_class=음식" class="side_menu">음식</a>
 	<hr>
-	<a href="/petshop/item/itemListForm.do?i_class=음식" class="side_menu">음식</a>
+		<a href="/petshop/item/itemListForm.do?i_class=옷" class="side_menu">옷</a>
 	<hr>
-	<a href="/petshop/item/itemListForm.do?i_class=옷" class="side_menu">옷</a>
-	<hr>
-	<a href="/petshop/item/itemListForm.do?i_class=기타" class="side_menu">기타</a>
-	<hr>
-	<br>
+		<a href="/petshop/item/itemListForm.do?i_class=기타" class="side_menu">기타</a>
+      </div>
+    </div>
+  </div>
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="headingTwo">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+        컨텐츠 2
+      </button>
+    </h2>
+    <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+      <div class="accordion-body">
+       <!-- 내용2 -->
+      </div>
+    </div>
+  </div>
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="headingThree">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+        컨텐츠 3
+      </button>
+    </h2>
+    <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+      <div class="accordion-body">
+        <!-- 내용3 -->
+      </div>
+    </div>
+  </div>
+</div>
 </body>
 </html>

@@ -21,7 +21,8 @@ String user_id = userVO.getUser_id();
 	rel="stylesheet"
 	integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
 	crossorigin="anonymous">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 <!-- 글꼴 -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -52,8 +53,9 @@ String user_id = userVO.getUser_id();
 										<h4>${user.user_id }</h4>
 										<p class="text-secondary mb-1">${user.u_name }</p>
 										<p class="text-muted font-size-sm">${user.u_address }</p>
-										<a class="btn btn-primary" href="#">장바구니</a>
-										<a class="btn btn-outline-primary" href="/petshop/user/logout.do">로그아웃</a>
+										<a class="btn btn-primary" href="#">장바구니</a> <a
+											class="btn btn-outline-primary"
+											href="/petshop/user/logout.do">로그아웃</a>
 									</div>
 								</div>
 							</div>
@@ -99,32 +101,33 @@ String user_id = userVO.getUser_id();
 								<hr>
 								<div class="row">
 									<div class="col-sm-12">
-										<button class="btn btn-success" data-bs-toggle="collapse" data-bs-target="#item_table">구매목록</button>
+										<button class="btn btn-success" data-bs-toggle="collapse"
+											data-bs-target="#item_table">구매목록</button>
 										<div id="item_table" class="collapse">
 											<div class="card card-body">
-											<table class="table">
-												<thead>
-													<tr>
-														<th scope="col">번호</th>
-														<th scope="col">이름</th>
-														<th scope="col">분류</th>
-														<th scope="col">가격</th>
-														<th scope="col">삭제</th>
-													</tr>
-												</thead>
-												<tbody>
-													<c:forEach var="item" items="${purchaseList}">
+												<table class="table">
+													<thead>
 														<tr>
-															<th>${item.itemno}</th>
-															<td>${item.i_name}</td>
-															<td>${item.i_class}</td>
-															<td>${item.i_price}</td>
-															<td><a
-																href="${contextPath}/user/removeItem.do?item=${item.itemno }">삭제하기</a></td>
+															<th scope="col">번호</th>
+															<th scope="col">이름</th>
+															<th scope="col">분류</th>
+															<th scope="col">가격</th>
+															<th scope="col">삭제</th>
 														</tr>
-													</c:forEach>
-												</tbody>
-											</table>
+													</thead>
+													<tbody>
+														<c:forEach var="item" items="${purchaseList}">
+															<tr>
+																<th>${item.itemno}</th>
+																<td>${item.i_name}</td>
+																<td>${item.i_class}</td>
+																<td>${item.i_price}</td>
+																<td><a
+																	href="${contextPath}/user/removeItem.do?item=${item.itemno }">삭제하기</a></td>
+															</tr>
+														</c:forEach>
+													</tbody>
+												</table>
 											</div>
 										</div>
 										<a class="btn btn-info" target="__blank"

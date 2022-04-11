@@ -37,57 +37,106 @@
 				return;
 			}
 			document.boardForm.submit();
+			alert("글쓰기가 완료되었습니다")
 		})
 	})
 </script>
 <style type="text/css">
+
+	.boardForm {
+		margin-left: 7%;
+	}
+
+	.board-header {
+		display: flex;
+		flex-wrap: wrap;
+		margin-bottom: 60px;
+	}
 	
-	textarea {
-    	width: 100%;
-    	height: 30em;
+	.board-header_writer,
+	.board-header_category,
+	.board-header_title,
+	.board-content {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		justify-content: flex-start;
+		margin-right: 30px;
+	}
+	
+	.board-header_writer input,
+	.board-header_category select,
+	.board-header_title input {
+		border: 1px solid transparent;
+   		border-bottom: 1px solid #ccc;
+   		border-radius: 3px;
+	    padding: 0.375rem 0.75rem;
+	    line-height: 1.5;
+	    height: 2.75em;
+	    
+	}
+	
+	.board-header_category {
+		width: 200px;	
+	}
+	
+	.board-header_category select {
+		width: 100%;
+	}
+	
+	.board-content textarea {
+    	width: 85%;
+    	height: 23em;
     	border: none;
     	resize: none;
     	border: 1px solid;
     }
+    
+    .board-btn {
+    	margin: 40px 0;
+    }
+    
+    .board-btn input {
+		border: none;
+    	display: inline-block;
+	    padding: 0 0.5em;
+	    line-height: 2em;
+	    text-decoration: none;
+	    color: black !important;
+	    background-color: #b3b3b3;
+    }
+    
 </style>
 </head>
 <body>
-	<form name="boardForm" method="post" action="${contextPath}/board/registerBoard.do" enctype="multipart/form-data">
+	<form class="boardForm" name="boardForm" method="post" action="${contextPath}/board/registerBoard.do" enctype="multipart/form-data">
 		
-		<table border="0" align="center">
-			<tr>
-				<td align="center" width="150" bgcolor="#C0C0C0">작성자</td>
-				<td colspan="2" align="left">
-					<input type="text" size="100%" maxlength="100" name="user_id" value="${sessionScope.user.user_id }" readonly="readonly">
-				</td>
-			</tr>
-			<tr>
-				
-				<td align="center" width="150" bgcolor="#C0C0C0">제목</td>
-				<td colspan="2" align="left">
-					<input type="text" size="100%" maxlength="500" name="b_title" placeholder="제목을 입력하세요">
-				</td>
-			</tr>
-			<tr>
-				<td align="center" width="150" bgcolor="#C0C0C0">카테고리</td>
-					<td colspan="2" align="left">
-					<input type="text" size="100%" maxlength="500" name="b_type" placeholder="카테고리를 입력하세요">
-				</td>
-			</tr>
-			<tr>
-				<td align="center" width="150" bgcolor="#C0C0C0">내용</td>
-				<td colspan="4" align="left">
-					<textarea rows="10" cols="81" maxlength="4000" name="b_content" placeholder="내용을 입력하세요"></textarea>
-				</td>
-			</tr>
-			<tr>
-				<td align="center"></td>
-				<td colspan="4">
-					<input type="button" id="saveBtn" value="글쓰기">
-					<input type="button" value="목록보기" id="backToList">
-				</td>
-			</tr>
-		</table>
+		<div class="board-header">
+			<div class="board-header_writer">
+				<h3>작성자</h3>
+				<input type="text" size="7%" name="user_id" value="${sessionScope.user.user_id }" readonly="readonly">
+			</div>
+			<div class="board-header_category">
+				<h3>카테고리</h3>
+				<select name="b_type"  >
+						<option>음식</option>
+						<option>옷</option>
+						<option>기타</option>
+				</select>
+			</div>
+			<div class="board-header_title">
+				<h3>제목</h3>
+				<input type="text" size="80%" maxlength="500" name="b_title" placeholder="제목을 입력하세요">
+			</div>
+		</div>
+		<div class="board-content">
+			<h3>내용</h3>
+			<textarea rows="10" maxlength="4000" name="b_content" placeholder="내용을 입력하세요"></textarea>
+		</div>
+		<div class="board-btn">
+			<input type="button" id="saveBtn" value="글쓰기">
+			<input type="button" value="목록보기" id="backToList">
+		</div>
 	</form>
 </body>
 </html>

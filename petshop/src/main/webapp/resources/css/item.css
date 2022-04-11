@@ -1,0 +1,32 @@
+@charset "UTF-8";
+
+	.card-img{
+		width: 450px;
+		height: 450px;
+	}
+	
+	.card-menu{
+		width: 450px;
+		padding-bottom: 40px;
+		border: 1px solid lightgrey;
+     	border-radius: 5px;
+     	margin-left: 380px;
+     	margin-right: 300px;
+     	margin-bottom: 100px;
+	}
+	.btn{
+		font-family: "Roboto", sans-serif;
+		  text-transform: uppercase;
+		  outline: 0;
+		  background: rgb(59, 59, 59);
+		  border: 0;
+		  padding: 10px;
+		  color: #FFFFFF;
+		  font-size: 14px;
+		  -webkit-transition: all 0.3 ease;
+		  transition: all 0.3 ease;
+		  cursor: pointer;
+	}
+	.btn:hover, .btn:active, .btn:focus {
+	  	background: #b3b3b3;
+	}

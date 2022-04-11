@@ -1,0 +1,61 @@
+@charset "UTF-8";
+   table{
+      border-collapse: collapse;
+      border: 3px hidden silver;
+      border-radius: 10px;
+        border-color: silver;
+        font-size: large;
+   }
+   tr{
+        border-bottom: 1px solid silver;
+   }
+   tr:first-child{
+      background-color: lightgrey;
+      border-bottom: 3px solid silver;
+   }
+   tr:last-child{
+      border-top: 3px solid lightgrey;
+      padding-top: 5px;
+   }
+   td:last-child{
+   
+   }
+   #btnBuy{
+      height: 50px;
+      width: 200px;
+      position: relative;
+      float: center;
+      left: 100px;
+      top: 70px;
+      font-size: x-large;
+      font-weight: bold;
+   }
+   #btnList{
+      position: relative;
+      float: right;
+      right: 40px;
+      height: 30px;
+      width: 80px;
+      top: 10px;
+      font-size: medium;
+      font-weight: bold;
+   }
+   #btnUpdate{
+      position: relative;
+      float: right;
+      right: 30px;
+      height: 30px;
+      width: 80px;
+      top: 10px;
+      font-size: large;
+      font-weight: bold;
+   }
+   #btnList, #btnUpdate, #btnBuy{
+      border-radius: 8px;
+          background-color: lightgrey;
+          border-color: transparent;
+   }
+   #btnList:hover, #btnUpdate:hover, #btnBuy:hover{
+      background: black;
+      color: white;
+   }
